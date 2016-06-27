@@ -9,24 +9,26 @@
 <p></p>
 <p></p>
 <p>
-    <div class="row">
-
-        <div class="col-md-12">
-            <a href="@Url.Action("Enter", "HelloWorld")">
-                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
-            </a>
-            <span class="pull-right">
-                <a href="@Url.Action("Validate", "HelloWorld")">
-                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
-                </a>
-            </span>
-        </div>
-    </div>
-
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
+        <div class="row">
+
+            <div class="col-md-12">
+                <a href="@Url.Action("Enter", "HelloWorld")">
+                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                </a>
+                <span class="pull-right">
+                   
+                   <input type="image" formaction="Validate" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></input>
+                 
+                </span>
+            </div>
+        </div>
+
+
+
 
         <div class="form-horizontal">
             <div class="form-group">
@@ -48,10 +50,13 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.submissionDate, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
+
                 @Html.LabelFor(model => model.supportingText1, htmlAttributes: new { @class = "control-label col-md-2" })
+
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.supportingText1, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
+
                 @Html.LabelFor(model => model.supportingText2, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.supportingText2, new { htmlAttributes = new { @class = "form-control" } })
