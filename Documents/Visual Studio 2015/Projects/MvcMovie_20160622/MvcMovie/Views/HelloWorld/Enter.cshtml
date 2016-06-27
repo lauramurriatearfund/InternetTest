@@ -1,0 +1,77 @@
+﻿@model MvcMovie.Models.Partner
+@{
+
+    ViewBag.Title = "Enter Partner Details";
+}
+@using MvcMovie.Models;
+
+<script>
+    var startTime = new Date().getTime();
+    
+    function onLoadEventHandler() {
+        var latency = new Date().getTime() - startTime;
+        console.log('Latency = ' + latency + 'ms');
+    }
+</script>
+<div class="row">
+
+    <div class="col-md-12">
+        <a href="@Url.Action("Display", "HelloWorld")">
+            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+        </a>
+        <span class="pull-right">
+            <a href="@Url.Action("Submit", "HelloWorld")">
+                <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+            </a>
+        </span>
+    </div>
+</div>
+<p>
+    Welcome to the internet test application, partner entry page. Please enter a few details.
+    Remember that this is just a test so the exact information you type is not important i.e. feel free to make it up!
+</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.partnerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.partnerName, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+            @Html.LabelFor(model => model.partnerRef, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.partnerRef, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+            @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.country, Partner.COUNTRIES)
+            </div>
+
+
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" formaction="Submit" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <a href="@Url.Action("Display", "HelloWorld")">
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+            </a>
+            <span class="pull-right">
+                <a href="@Url.Action("Submit", "HelloWorld")">
+                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                </a>
+            </span>
+        </div>
+    </div>
+}

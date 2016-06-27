@@ -1,0 +1,53 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Internet Connection Testing</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Internet Testing", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("HOME", "Index", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Text" ? "active" : "")">@Html.ActionLink("TEXT", "Text", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Display" ? "active" : "")">@Html.ActionLink("DISPLAY", "Display", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Enter" ? "active" : "")">@Html.ActionLink("ENTER", "Enter", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Submit" ? "active" : "")">@Html.ActionLink("SUBMIT", "Submit", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Validate" ? "active" : "")">@Html.ActionLink("VALIDATE", "Validate", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Upload" ? "active" : "")">@Html.ActionLink("UPLOAD", "Upload", "HelloWorld")</li>
+
+                </ul>
+               
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

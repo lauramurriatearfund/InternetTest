@@ -1,0 +1,68 @@
+﻿<script>
+var x = document.getElementById("demo");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+    alert(innerHTML);
+}
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+}
+</script>
+
+<script>
+    alert('hi');
+var infowindow = new google.maps.InfoWindow({
+    map: map,
+    position: pos,
+    content: 'Location found using HTML5.'
+});
+alert("hello");
+  // the below line has been inserted to assign a JS variable to HTML input field called 'geolocation'
+document.getElementById('location').value = pos
+  map.setCenter(pos);
+// the below line has been inserted to autosubmit the form.
+document.getElementById("geolocation").submit(); 
+</script>
+
+
+<p></p>
+<p></p>
+<p></p>
+
+<div class="col-md-12">
+    <a href="@Url.Action("Submit", "HelloWorld")">
+        <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+    </a>
+    <span class="pull-right">
+        <a href="@Url.Action("Upload", "HelloWorld")">
+            <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+        </a>
+    </span>
+</div>
+<p>
+    Welcome to the internet test application, location page.
+    We would like to record your location for testing purposes. Please 'OK' the pop up to allow us to do this.
+</p>
+
+<form id="geolocation" action="upload" method="POST">
+
+    <input type="text" id="location" name="location" value="" />
+    <input type="submit" />
+
+</form>
+
+<div class="col-md-12">
+    <a href="@Url.Action("Submit", "HelloWorld")">
+        <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+    </a>
+    <span class="pull-right">
+        <a href="@Url.Action("Upload", "HelloWorld")">
+            <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+        </a>
+    </span>
+</div>

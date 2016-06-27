@@ -1,0 +1,54 @@
+﻿<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+<p></p>
+<p></p>
+<p></p>
+@ViewBag.formSubmitSuccess
+
+<div class="row">
+
+    <div class="col-md-12">
+        <a href="@Url.Action("Validate", "HelloWorld")">
+            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+        </a>
+        <span class="pull-right">
+            <a href="@Url.Action("Success", "HelloWorld")">
+                <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+            </a>
+        </span>
+    </div>
+</div>
+<p>
+    Welcome to the internet test application, upload page. Please enter a few details.
+    Remember that this is just a test so the exact files you attach are not important i.e. feel free to make it up!
+</p>
+
+    @using (Html.BeginForm("", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="file" name="FileUpload1" class="filestyle" /><br />
+                <input type="file" name="FileUpload2" /><br />
+                <input type="file" name="FileUpload3" /><br />
+                <input type="file" name="FileUpload4" /><br />
+                <input type="file" name="FileUpload5" /><br />
+                <input type="submit" value="Upload" class="btn btn-default" formaction="Upload" />
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <a href="@Url.Action("Validate", "HelloWorld")">
+                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                </a>
+                <span class="pull-right">
+                    <a href="@Url.Action("Success", "HelloWorld")">
+                        <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                    </a>
+                </span>
+            </div>
+        </div>
+
+    }
+
