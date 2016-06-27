@@ -21,21 +21,18 @@
                 </a>
                 <span class="pull-right">
                    
-                   <input type="image" formaction="Validate" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></input>
+                   <input type="image" formaction="Validate" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"/>
                  
                 </span>
             </div>
         </div>
 
-
-
-
         <div class="form-horizontal">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.projectName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.projectName, new { htmlAttributes = new { @class = "form-control" } })
-
                 </div>
                 @Html.LabelFor(model => model.projectRef, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

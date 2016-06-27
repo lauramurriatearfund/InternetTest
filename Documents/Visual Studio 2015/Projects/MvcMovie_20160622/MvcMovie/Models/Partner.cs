@@ -9,14 +9,17 @@ namespace MvcMovie.Models
     {
         public int ID { get; set; }
 
-        [Required]
+
+
+        [Required(ErrorMessageResourceType = typeof(Resources.Resources),   ErrorMessageResourceName = "PartnerNameRequired")]
+        [StringLength (10)]
         [Display(Name = "Partner Name")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        //[StringLength(100, ErrorMessage = "Partner Name must be at least 6 characters long.", MinimumLength = 6)]
         public string partnerName { get; set; }
 
-        [Required]
+        
         [Display(Name = "Partner Reference")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(40, ErrorMessage = "Partner Reference must be at least 6 characters long.", MinimumLength = 6)]
         public string partnerRef { get; set; }
 
         [Required]

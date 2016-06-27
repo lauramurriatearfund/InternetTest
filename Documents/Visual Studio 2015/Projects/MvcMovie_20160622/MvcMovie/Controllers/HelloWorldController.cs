@@ -43,21 +43,6 @@ namespace MvcMovie.Controllers
 
         public ActionResult Text()
         {
-            string addressStr = Request.UserHostAddress;
-            if (addressStr != null && this.Session.SessionID != null)
-            {
-                Metric addressMetric = new Metric();
-                addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
-                addressMetric.MetricValue = addressStr;
-                addressMetric.SessionID = this.Session.SessionID;
-                addressMetric.Timestamp = DateTime.Now;
-                //TODO - use db context to update metrics database
-            }
-
-            //string geolocStr = Request.U
-            //navigator.geolocation.getCurrentPosition
-
-
             if (this.Session.SessionID != null)
             {
                 Metric progress = new Metric();
@@ -66,7 +51,54 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //TODO - use db context to update metrics database
+
+
+                string addressStr = Request.UserHostAddress;
+                string osStr = Request.UserAgent;
+                string[] langArr = Request.UserLanguages;
+
+                if (addressStr != null)
+                {
+                    Metric addressMetric = new Metric();
+                    addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
+                    addressMetric.MetricValue = addressStr;
+                    addressMetric.SessionID = this.Session.SessionID;
+                    addressMetric.Timestamp = DateTime.Now;
+                    //TODO - use db context to update metrics database
+                }
+
+                if (osStr != null) {
+                    Metric os = new Metric();
+                    os.MetricName = Metric.METRIC_USER_AGENT;
+                    os.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
+                    os.SessionID = this.Session.SessionID;
+                    os.Timestamp = DateTime.Now;
+                    //use db context to update metrics database
+                    metricDb.save(os);
+
+                }
+
+                if (langArr.Length > 0)
+                {
+                    
+                    for (int i=0; i < langArr.Length;  i++) {
+                        Metric lang = new Metric();
+                        lang.MetricName = Metric.METRIC_LANGUAGE;
+                        lang.MetricValue = langArr[i];
+                        lang.SessionID = this.Session.SessionID;
+                        lang.Timestamp = DateTime.Now;
+                        //use db context to update metrics database
+                        metricDb.save(lang);
+                        
+
+                    }
+
+                }
+                //string geolocStr = Request.U
+                //navigator.geolocation.getCurrentPosition
+
             }
+            
             return View();
         }
 
@@ -122,6 +154,8 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.save(progress);
+
+                
             }
             model.submissionDate = DateTime.Today;
 

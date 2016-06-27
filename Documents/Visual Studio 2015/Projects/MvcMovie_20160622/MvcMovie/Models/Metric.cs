@@ -26,6 +26,8 @@ namespace MvcMovie.Models
         public static readonly string METRIC_GEO_LOCATION = "LOCATION";
         public static readonly string METRIC_DEVICE_TYPE = "DEVICE_TYPE";
         public static readonly string METRIC_IP_ADDRESS = "IP_ADDRESS";
+        public static readonly string METRIC_USER_AGENT = "USER_AGENT";
+        public static readonly string METRIC_LANGUAGE = "USER_LANGUAGE";
 
         [Required]
         public int ID { get; set; }
