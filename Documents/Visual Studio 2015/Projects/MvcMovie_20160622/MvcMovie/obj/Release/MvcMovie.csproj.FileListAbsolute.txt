@@ -166,3 +166,4 @@ C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\Mvc
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Release\es\MvcMovie.resources.dll
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Release\MvcMovie.dll
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Release\MvcMovie.pdb
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Release\MvcMovie.csprojResolveAssemblyReference.cache
