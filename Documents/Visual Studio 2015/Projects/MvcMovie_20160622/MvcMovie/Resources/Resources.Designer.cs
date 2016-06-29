@@ -61,11 +61,38 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Partner Name.
+        /// </summary>
+        internal static string PartnerName {
+            get {
+                return ResourceManager.GetString("PartnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter a name for your organisation.
         /// </summary>
         internal static string PartnerNameRequired {
             get {
                 return ResourceManager.GetString("PartnerNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partner Reference.
+        /// </summary>
+        internal static string PartnerRef {
+            get {
+                return ResourceManager.GetString("PartnerRef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a reference number for your organisation, or make one up.
+        /// </summary>
+        internal static string PartnerRefRequired {
+            get {
+                return ResourceManager.GetString("PartnerRefRequired", resourceCulture);
             }
         }
     }

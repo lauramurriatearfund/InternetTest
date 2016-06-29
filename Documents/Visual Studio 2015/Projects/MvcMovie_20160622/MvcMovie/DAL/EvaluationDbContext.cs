@@ -13,7 +13,7 @@ namespace MvcMovie.DAL
         {
         }
 
-        public DbSet<Session> Evaluations { get; set; }
+        public DbSet<Evaluation> Evaluations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -21,13 +21,13 @@ namespace MvcMovie.DAL
         }
 
 
-        public void save(Session evaluation)
+        public void save(Evaluation evaluation)
         {
             return;
             //TODO - throw necessary exceptions
         }
 
-        public static implicit operator EvaluationDbContext(Session v)
+        public static implicit operator EvaluationDbContext(Evaluation v)
         {
             throw new NotImplementedException();
         }

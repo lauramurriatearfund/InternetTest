@@ -206,6 +206,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\Metric.cs" />
     <Compile Include="Models\Evaluation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -284,6 +285,7 @@
     <Content Include="Views\HelloWorld\Upload.cshtml" />
     <Content Include="Views\HelloWorld\Submit.cshtml" />
     <Content Include="Views\HelloWorld\Success.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CheckBoxListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

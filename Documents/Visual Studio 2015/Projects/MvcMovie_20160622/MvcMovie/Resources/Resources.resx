@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PartnerName" xml:space="preserve">
+    <value>Partner Name</value>
+  </data>
   <data name="PartnerNameRequired" xml:space="preserve">
     <value>Please enter a name for your organisation</value>
+  </data>
+  <data name="PartnerRef" xml:space="preserve">
+    <value>Partner Reference</value>
+  </data>
+  <data name="PartnerRefRequired" xml:space="preserve">
+    <value>Please enter a reference number for your organisation, or make one up</value>
   </data>
 </root>

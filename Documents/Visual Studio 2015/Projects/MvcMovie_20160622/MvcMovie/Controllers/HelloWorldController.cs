@@ -119,13 +119,16 @@ namespace MvcMovie.Controllers
             return View();
         }
 
-
-
-        public ActionResult Enter(Partner model)
+        [HttpGet]
+        public ActionResult Enter()
         {
-            //use db context to update partner db
-            partnerDb.save(model);
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Enter(Partner model)
+        { 
+            
             if (this.Session.SessionID != null)
             {
 
@@ -137,14 +140,29 @@ namespace MvcMovie.Controllers
                 //use db context to update metrics database
                 metricDb.save(progress);
             }
-            return View();
+
+            if (ModelState.IsValid)
+            {
+                //use db context to update partner db
+                partnerDb.save(model);
+                ViewBag.message = string.Format("Thank you. Your information has been received");
+                //proceed to next tab/screen on user journey
+                return RedirectToAction("Submit");
+            } else
+            {
+                //show same page for re-entry of information
+                return View();
+            }
+
+            
         }
 
-        // 
-        // GET: /HelloWorld/Submit/ 
-
-        public ActionResult Submit(Session model)
+        [HttpGet]
+        public ActionResult Submit()
         {
+            var model = new Evaluation();
+            model.submissionDate = DateTime.Today;
+
             if (this.Session.SessionID != null)
             {
                 Metric progress = new Metric();
@@ -154,12 +172,33 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.save(progress);
-
-                
             }
-            model.submissionDate = DateTime.Today;
+
+
 
             return View(model);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult Submit(Evaluation model)
+        {
+            if (ModelState.IsValid)
+            {
+                //use db context to update evaluation db
+                evalDb.save(model);
+                ViewBag.message = string.Format("Thank you. Your information has been received");
+                //proceed to next tab/screen on user journey
+                return RedirectToAction("Validate");
+            }
+            else
+            {
+                //show same page for re-entry of information
+                return View(model);
+            }
+
+           
         }
 
         public ActionResult Validate()

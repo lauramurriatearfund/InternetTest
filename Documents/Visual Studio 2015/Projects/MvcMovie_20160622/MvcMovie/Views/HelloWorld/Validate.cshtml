@@ -1,6 +1,7 @@
 ﻿<script>
 var x = document.getElementById("demo");
 function getLocation() {
+    alert('hi');
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
@@ -12,10 +13,8 @@ function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
 }
-</script>
 
-<script>
-    alert('hi');
+    
 var infowindow = new google.maps.InfoWindow({
     map: map,
     position: pos,
@@ -48,7 +47,10 @@ document.getElementById("geolocation").submit();
     Welcome to the internet test application, location page.
     We would like to record your location for testing purposes. Please 'OK' the pop up to allow us to do this.
 </p>
-
+<p id="demo">Click the button please!</p>
+<button onclick="getlocation()">LOCATE ME</button>
+<div id="mapholder">
+</div>
 <form id="geolocation" action="upload" method="POST">
 
     <input type="text" id="location" name="location" value="" />

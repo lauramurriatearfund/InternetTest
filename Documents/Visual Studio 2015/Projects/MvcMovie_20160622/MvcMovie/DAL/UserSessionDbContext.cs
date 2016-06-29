@@ -27,7 +27,7 @@ namespace MvcMovie.DAL
             //TODO - throw necessary exceptions
         }
 
-        public static implicit operator UserSessionDbContext(Session v)
+        public static implicit operator UserSessionDbContext(UserSession v)
         {
             throw new NotImplementedException();
         }
