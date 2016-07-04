@@ -61,11 +61,38 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internet Testing.
+        /// </summary>
+        public static string ApplicationName {
+            get {
+                return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose your language.
         /// </summary>
         public static string ChooseYourLanguage {
             get {
                 return ResourceManager.GetString("ChooseYourLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string Continue {
+            get {
+                return ResourceManager.GetString("Continue", resourceCulture);
             }
         }
         
@@ -97,6 +124,15 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display.
+        /// </summary>
+        public static string DisplayMenuLabel {
+            get {
+                return ResourceManager.GetString("DisplayMenuLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to the internet test application, partner entry page. Please enter a few details.
         ///Remember that this is just a test so the exact information you type is not important i.e. feel free to make it up!.
         /// </summary>
@@ -107,11 +143,29 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter.
+        /// </summary>
+        public static string EnterMenuLabel {
+            get {
+                return ResourceManager.GetString("EnterMenuLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entry of Partner Details.
         /// </summary>
         public static string EnterTitle {
             get {
                 return ResourceManager.GetString("EnterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomeMenuLabel {
+            get {
+                return ResourceManager.GetString("HomeMenuLabel", resourceCulture);
             }
         }
         
@@ -206,11 +260,29 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string SubmitMenuLabel {
+            get {
+                return ResourceManager.GetString("SubmitMenuLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submission of Project Details.
         /// </summary>
         public static string SubmitTitle {
             get {
                 return ResourceManager.GetString("SubmitTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string TextMenuLabel {
+            get {
+                return ResourceManager.GetString("TextMenuLabel", resourceCulture);
             }
         }
         
@@ -224,11 +296,29 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please complete this form and upload at least one document. This is a test so the file contents is not important, and the information will not be saved.
         /// </summary>
         public static string UploadDesc {
             get {
                 return ResourceManager.GetString("UploadDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string UploadMenuLabel {
+            get {
+                return ResourceManager.GetString("UploadMenuLabel", resourceCulture);
             }
         }
         
@@ -247,6 +337,15 @@ namespace MvcMovie.Resources {
         public static string ValidateDesc {
             get {
                 return ResourceManager.GetString("ValidateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate.
+        /// </summary>
+        public static string ValidateMenuLabel {
+            get {
+                return ResourceManager.GetString("ValidateMenuLabel", resourceCulture);
             }
         }
         

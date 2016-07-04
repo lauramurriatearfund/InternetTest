@@ -3,12 +3,14 @@
     ViewBag.Title = "Congratulations! Internet Testing Starts Here";
     Layout = null;
 }
+@using MvcMovie.Resources;
 <p>
 </p>
+Current culture:  @System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
 <p></p>
 <p>Congratulations you are viewing the internet testing application, start page</p>
 <p></p>
-<a href="/HelloWorld/Text">Continue</a> 
+<a href="/HelloWorld/Text">@Resources.Continue</a> 
 
 
 

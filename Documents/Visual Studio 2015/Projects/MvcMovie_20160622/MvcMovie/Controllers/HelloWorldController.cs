@@ -259,8 +259,11 @@ namespace MvcMovie.Controllers
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
             // Save culture in a cookie
-            HttpCookie cookie = Request.Cookies["_culture"];
-            if (cookie != null)
+            //HttpCookie cookie = Request.Cookies["_culture"];
+
+            /* DON'T save the culture in cookie until proven it works without
+             
+             if (cookie != null)
                 cookie.Value = culture;   // update cookie value
             else
             {
@@ -268,7 +271,8 @@ namespace MvcMovie.Controllers
                 cookie.Value = culture;
                 cookie.Expires = System.DateTime.Now.AddYears(1);
             }
-            Response.Cookies.Add(cookie);
+            Response.Cookies.Add(cookie);*/
+
             return RedirectToAction("Enter");
         }
 

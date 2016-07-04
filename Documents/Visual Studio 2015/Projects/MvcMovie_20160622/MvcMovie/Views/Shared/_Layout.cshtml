@@ -1,6 +1,7 @@
 ﻿
 <!DOCTYPE html>
 <html>
+@using MvcMovie.Resources;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,17 +22,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Internet Testing", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(Resources.ApplicationName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("HOME", "Index", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Text" ? "active" : "")">@Html.ActionLink("TEXT", "Text", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Display" ? "active" : "")">@Html.ActionLink("DISPLAY", "Display", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Enter" ? "active" : "")">@Html.ActionLink("ENTER", "Enter", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Submit" ? "active" : "")">@Html.ActionLink("SUBMIT", "Submit", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Validate" ? "active" : "")">@Html.ActionLink("LOCATE", "Validate", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Upload" ? "active" : "")">@Html.ActionLink("UPLOAD", "Upload", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink(@Resources.HomeMenuLabel, "Index", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Text" ? "active" : "")">@Html.ActionLink(@Resources.TextMenuLabel, "Text", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Display" ? "active" : "")">@Html.ActionLink(@Resources.DisplayMenuLabel, "Display", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Enter" ? "active" : "")">@Html.ActionLink(@Resources.EnterMenuLabel, "Enter", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Submit" ? "active" : "")">@Html.ActionLink(@Resources.SubmitMenuLabel, "Submit", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Validate" ? "active" : "")">@Html.ActionLink(@Resources.ValidateMenuLabel, "Validate", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Upload" ? "active" : "")">@Html.ActionLink(@Resources.UploadMenuLabel, "Upload", "HelloWorld")</li>
 
                 </ul>
                

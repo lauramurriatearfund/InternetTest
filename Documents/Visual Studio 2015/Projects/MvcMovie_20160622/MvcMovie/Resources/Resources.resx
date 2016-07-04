@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Internet Testing</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="ChooseYourLanguage" xml:space="preserve">
     <value>Choose your language</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
@@ -129,12 +138,21 @@
   <data name="Create" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="DisplayMenuLabel" xml:space="preserve">
+    <value>Display</value>
+  </data>
   <data name="EnterDesc" xml:space="preserve">
     <value>Welcome to the internet test application, partner entry page. Please enter a few details.
 Remember that this is just a test so the exact information you type is not important i.e. feel free to make it up!</value>
   </data>
+  <data name="EnterMenuLabel" xml:space="preserve">
+    <value>Enter</value>
+  </data>
   <data name="EnterTitle" xml:space="preserve">
     <value>Entry of Partner Details</value>
+  </data>
+  <data name="HomeMenuLabel" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
@@ -166,20 +184,35 @@ Remember that this is just a test so the exact information you type is not impor
   <data name="SubmitDesc" xml:space="preserve">
     <value>Please complete the form below as best you can. The exact information is not important</value>
   </data>
+  <data name="SubmitMenuLabel" xml:space="preserve">
+    <value>Submit</value>
+  </data>
   <data name="SubmitTitle" xml:space="preserve">
     <value>Submission of Project Details</value>
+  </data>
+  <data name="TextMenuLabel" xml:space="preserve">
+    <value>Text</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
   <data name="UploadDesc" xml:space="preserve">
     <value>Please complete this form and upload at least one document. This is a test so the file contents is not important, and the information will not be saved</value>
+  </data>
+  <data name="UploadMenuLabel" xml:space="preserve">
+    <value>Upload</value>
   </data>
   <data name="UploadTitle" xml:space="preserve">
     <value>Upload of Supporting Documents</value>
   </data>
   <data name="ValidateDesc" xml:space="preserve">
     <value>Please approve the dialogue box so we can obtain your location. </value>
+  </data>
+  <data name="ValidateMenuLabel" xml:space="preserve">
+    <value>Locate</value>
   </data>
   <data name="ValidateTitle" xml:space="preserve">
     <value>Internet Connectivity and Location</value>

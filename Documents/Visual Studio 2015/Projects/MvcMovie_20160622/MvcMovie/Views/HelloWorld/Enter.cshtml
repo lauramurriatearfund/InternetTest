@@ -37,15 +37,15 @@ if (c == culture)
 </script>
 
 <div class="row">
-
+    Current culture:  @System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
     <div class="col-md-12">
         <a href="@Url.Action("Display", "HelloWorld")">
-            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
         </a>
 
         <span class="pull-right">
 
-            <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue" />
+            <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue" />
 
         </span>
     </div>
@@ -66,7 +66,7 @@ if (c == culture)
                 <div class="control-group">
                     <div class="controls">
                         <label for="en-us">
-                            <input name="culture" id="en-uk" value="en-uk" type="radio" @selected("en-GB", culture) /> English
+                            <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English
                         </label>
                     </div>
                 </div>
@@ -126,11 +126,11 @@ if (c == culture)
 
         <div class="col-md-12">
             <a href="@Url.Action("Display", "HelloWorld")">
-                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Back"></image>
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
             </a>
             <span class="pull-right">
                 <a href="@Url.Action("Submit", "HelloWorld")">
-                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
                 </a>
             </span>
         </div>
