@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcMovie", "MvcMovie\MvcMovie.csproj", "{F7512F6C-65C9-48AE-AAE2-E29B83EC528A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Resources", "ClassLibrary1\Resources.xproj", "{9D3CF90C-B3CA-4B02-B0A4-8D7E7881D14C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F7512F6C-65C9-48AE-AAE2-E29B83EC528A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7512F6C-65C9-48AE-AAE2-E29B83EC528A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7512F6C-65C9-48AE-AAE2-E29B83EC528A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D3CF90C-B3CA-4B02-B0A4-8D7E7881D14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D3CF90C-B3CA-4B02-B0A4-8D7E7881D14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D3CF90C-B3CA-4B02-B0A4-8D7E7881D14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D3CF90C-B3CA-4B02-B0A4-8D7E7881D14C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

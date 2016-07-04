@@ -117,8 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChooseYourLanguage" xml:space="preserve">
+    <value>Choose your language</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Please enter your country, or simply pick any one from the list</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="EnterDesc" xml:space="preserve">
+    <value>Welcome to the internet test application, partner entry page. Please enter a few details.
+Remember that this is just a test so the exact information you type is not important i.e. feel free to make it up!</value>
+  </data>
+  <data name="EnterTitle" xml:space="preserve">
+    <value>Entry of Partner Details</value>
+  </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
+  </data>
+  <data name="PartnerNameLength" xml:space="preserve">
+    <value>Partner Name must be between 6 and 40 characters long</value>
   </data>
   <data name="PartnerNameRequired" xml:space="preserve">
     <value>Please enter a name for your organisation</value>
@@ -126,7 +148,40 @@
   <data name="PartnerRef" xml:space="preserve">
     <value>Partner Reference</value>
   </data>
+  <data name="PartnerRefLength" xml:space="preserve">
+    <value>Partner Reference must be between 6 and 40 characters long</value>
+  </data>
   <data name="PartnerRefRequired" xml:space="preserve">
     <value>Please enter a reference number for your organisation, or make one up</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="ProjectNameLength" xml:space="preserve">
+    <value>Project Name must be between 6 and 100 characters long</value>
+  </data>
+  <data name="ProjectNameRequired" xml:space="preserve">
+    <value>Please enter a name for your project, or make one up</value>
+  </data>
+  <data name="SubmitDesc" xml:space="preserve">
+    <value>Please complete the form below as best you can. The exact information is not important</value>
+  </data>
+  <data name="SubmitTitle" xml:space="preserve">
+    <value>Submission of Project Details</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="UploadDesc" xml:space="preserve">
+    <value>Please complete this form and upload at least one document. This is a test so the file contents is not important, and the information will not be saved</value>
+  </data>
+  <data name="UploadTitle" xml:space="preserve">
+    <value>Upload of Supporting Documents</value>
+  </data>
+  <data name="ValidateDesc" xml:space="preserve">
+    <value>Please approve the dialogue box so we can obtain your location. </value>
+  </data>
+  <data name="ValidateTitle" xml:space="preserve">
+    <value>Internet Connectivity and Location</value>
   </data>
 </root>

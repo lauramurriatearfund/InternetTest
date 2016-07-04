@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Display Formatted Text and Images";
+    
 }
+
+@using MvcMovie.Resources;
 <p></p>
 <p></p>
 <p></p>
@@ -19,6 +22,10 @@
         </span>
     </div>
 </div>
+
+
+
+
 <p>
     Welcome to the internet test application, display page. Please enjoy looking at this formatted text
     and image content displayed here. You need not read or understand the content of this page.
@@ -45,7 +52,7 @@
     </div>
     <div class="col-md-6">
         <img src="~/Content/images/Lastinglocalchange.jpg" />
-    </div> 
+    </div>
 </div>
 <div class="row">
     <div class="col-md-6">
@@ -76,7 +83,7 @@
 
     <div class="col-md-12">
         <a href="@Url.Action("Text", "HelloWorld")">
-            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+            <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Back"></image>
         </a>
         <span class="pull-right">
             <a href="@Url.Action("Enter", "HelloWorld")">

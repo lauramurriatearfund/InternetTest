@@ -12,18 +12,17 @@ namespace MvcMovie.Models
 
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resources),   ErrorMessageResourceName = "PartnerNameRequired")]
-        //[Display(ResourceType= typeof(Resources.Resources), Name= "PartnerName")]
-        [Display(Name = "Partner Name")]
-        [StringLength(100, ErrorMessage = "Partner Name must be at least 6 characters long.", MinimumLength = 6)]
+        [Display(ResourceType= typeof(Resources.Resources), Name= "PartnerName")]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerNameLength" , MinimumLength = 6)]
         public string partnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerRefRequired")]
-        [Display(Name = "Partner Reference")]
-        //[StringLength(40, ErrorMessage = "Partner Reference must be at least 6 characters long.", MinimumLength = 6)]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "PartnerRef")]
+        [StringLength(40, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerRefLength", MinimumLength = 6)]
         public string partnerRef { get; set; }
 
-        [Required]
-        [Display(Name = "Country")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "CountryRequired")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "Country")]
         public string country { get; set; }
 
         public DateTime createdDate { get; set; }

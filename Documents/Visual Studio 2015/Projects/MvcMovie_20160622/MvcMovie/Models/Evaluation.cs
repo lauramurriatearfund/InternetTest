@@ -24,14 +24,15 @@ namespace MvcMovie.Models
 
         public Partner partner { get; set; }
 
-        [Required]
-        [Display(Name = "Project Name")]
+        [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "ProjectNameRequired")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "ProjectName")]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "ProjectNameLength", MinimumLength = 6)]
         public string projectName { get; set; }
 
         [Display(Name = "Project Reference")]
         public string projectRef { get; set; }
 
-        [Display(Name = "Theme")]
+        [Display(ResourceType = typeof(Resources.Resources), Name = "Theme")]
         public string theme { get; set; }
 
         [Display(Name = "Submission Date")]

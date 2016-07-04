@@ -1,38 +1,92 @@
 ﻿@model MvcMovie.Models.Partner
-@{
 
-    ViewBag.Title = "Enter Partner Details";
-}
 @using MvcMovie.Models;
+@using MvcMovie.Resources;
+@{
+    ViewBag.Title = Resources.SubmitTitle;
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+
+}
+@helper selected(string c, string culture)
+{
+if (c == culture)
+{
+        @:checked="checked"
+    }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        (function ($) {
+            $("input[type = 'radio']").click(function () {
+                $(this).parents("form").submit(); // post form
+            });
+
+        })(jQuery);
+    </script>
+}
+
 
 <script>
     var startTime = new Date().getTime();
-    
+
     function onLoadEventHandler() {
         var latency = new Date().getTime() - startTime;
         console.log('Latency = ' + latency + 'ms');
     }
 </script>
+
 <div class="row">
 
     <div class="col-md-12">
         <a href="@Url.Action("Display", "HelloWorld")">
             <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
         </a>
+
         <span class="pull-right">
-            
-                <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue"/>
-           
+
+            <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="Continue" />
+
         </span>
     </div>
 </div>
 <p>
-    Welcome to the internet test application, partner entry page. Please enter a few details.
-    Remember that this is just a test so the exact information you type is not important i.e. feel free to make it up!
+    @Resources.EnterDesc
+ 
 </p>
+<div class="row">
+
+    @using (Html.BeginForm("SetCulture", "HelloWorld"))
+    {
+        <fieldset>
+            <div class="col-md-2">
+                <div class="control-group"><b>@Resources.ChooseYourLanguage</b></div>
+            </div>
+            <div class="col-md-10">
+                <div class="control-group">
+                    <div class="controls">
+                        <label for="en-us">
+                            <input name="culture" id="en-uk" value="en-uk" type="radio" @selected("en-GB", culture) /> English
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <label for="es">
+                            <input name="culture" id="es" value="es" type="radio" @selected("es", culture) /> Español
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+    }
+
+</div>
 @using (Html.BeginForm())
 {
-   
+
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -45,6 +99,7 @@
                 @Html.EditorFor(model => model.partnerName, new { htmlAttributes = new { @class = "form-control" } })
 
             </div>
+            <br />
             @Html.LabelFor(model => model.partnerRef, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.ValidationMessageFor(model => model.partnerRef, "", new { @class = "text-danger" })
@@ -52,6 +107,7 @@
                 @Html.EditorFor(model => model.partnerRef, new { htmlAttributes = new { @class = "form-control" } })
 
             </div>
+            <br />
             @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(x => x.country, Partner.COUNTRIES)
@@ -62,7 +118,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="@Resources.Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -70,7 +126,7 @@
 
         <div class="col-md-12">
             <a href="@Url.Action("Display", "HelloWorld")">
-                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Continue"></image>
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="Back"></image>
             </a>
             <span class="pull-right">
                 <a href="@Url.Action("Submit", "HelloWorld")">
