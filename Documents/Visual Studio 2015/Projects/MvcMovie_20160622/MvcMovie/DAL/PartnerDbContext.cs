@@ -7,7 +7,7 @@ namespace MvcMovie.DAL
 {
     public class PartnerDbContext : DbContext
     {
-
+        
         public PartnerDbContext() : base("PartnerDbContext")
         {
         }
@@ -17,12 +17,6 @@ namespace MvcMovie.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-
-        public void save(Partner partner)
-        {
-            return;
-            //TODO - throw necessary exceptions
         }
 
     }

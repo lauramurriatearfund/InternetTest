@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
 namespace MvcMovie.Models
@@ -20,7 +21,9 @@ namespace MvcMovie.Models
             Connectivities.Add(new CheckBoxListItem() { ID = 8, Display = "SMS", IsChecked = false });
         }
 
-        public int evaluationID { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ID { get; set; }
 
         public Partner partner { get; set; }
 

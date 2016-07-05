@@ -7,9 +7,9 @@ using MvcMovie.Models;
 
 namespace MvcMovie.DAL
 {
-    public class MetricDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<MetricDbContext>
+    public class MetricDbInitialiser : System.Data.Entity.DropCreateDatabaseIfModelChanges<MetricDbContext>
     {
 
-        //Seed method not required as database starts empty in both text and production
+        //Seed method not required as database starts empty in both test and production
     }
 }

@@ -7,7 +7,7 @@ using MvcMovie.Models;
 
 namespace MvcMovie.DAL
 {
-    public class PartnerInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<PartnerDbContext>
+    public class PartnerInitialiser : System.Data.Entity.DropCreateDatabaseIfModelChanges<PartnerDbContext>
     {
         protected override void Seed(PartnerDbContext context)
         {

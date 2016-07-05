@@ -26,8 +26,13 @@ namespace MvcMovie.Controllers
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
                 metric.SessionID = this.Session.SessionID;
+
+               
+                metricDb.Metrics.Add(metric);
+                metricDb.SaveChanges();
+                
             }
-            //TODO - use db context to update metrics database
+            
 
             if (this.Session.SessionID != null)
             {
@@ -36,7 +41,8 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_HOME;
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
-                //TODO - use db context to update metrics database
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
             }
 
 
@@ -52,8 +58,8 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_TEXT;
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
-                //TODO - use db context to update metrics database
-
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
 
                 string addressStr = Request.UserHostAddress;
                 string osStr = Request.UserAgent;
@@ -66,17 +72,20 @@ namespace MvcMovie.Controllers
                     addressMetric.MetricValue = addressStr;
                     addressMetric.SessionID = this.Session.SessionID;
                     addressMetric.Timestamp = DateTime.Now;
-                    //TODO - use db context to update metrics database
+                    metricDb.Metrics.Add(addressMetric);
+                    metricDb.SaveChanges();
                 }
 
                 if (osStr != null) {
                     Metric os = new Metric();
                     os.MetricName = Metric.METRIC_USER_AGENT;
-                    os.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
+                    
+                    os.MetricValue = Request.UserAgent;
                     os.SessionID = this.Session.SessionID;
                     os.Timestamp = DateTime.Now;
                     //use db context to update metrics database
-                    metricDb.save(os);
+                    metricDb.Metrics.Add(os);
+                    metricDb.SaveChanges();
 
                 }
 
@@ -90,8 +99,9 @@ namespace MvcMovie.Controllers
                         lang.SessionID = this.Session.SessionID;
                         lang.Timestamp = DateTime.Now;
                         //use db context to update metrics database
-                        metricDb.save(lang);
-                        
+                        metricDb.Metrics.Add(lang);
+                        metricDb.SaveChanges();
+
 
                     }
 
@@ -104,8 +114,6 @@ namespace MvcMovie.Controllers
             return View();
         }
 
-        // 
-        // GET: /HelloWorld/Display/ 
 
         public ActionResult Display()
         {
@@ -116,7 +124,9 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_DISPLAY;
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
-                //TODO - use db context to update metrics database
+                //use db context to update metrics database
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
             }
             return View();
         }
@@ -140,13 +150,15 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
-                metricDb.save(progress);
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
             }
 
             if (ModelState.IsValid)
             {
                 //use db context to update partner db
-                partnerDb.save(model);
+                partnerDb.Partners.Add(model);
+                partnerDb.SaveChanges();
                 ViewBag.message = string.Format("Thank you. Your information has been received");
                 //proceed to next tab/screen on user journey
                 return RedirectToAction("Submit");
@@ -173,7 +185,8 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
-                metricDb.save(progress);
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
             }
 
 
@@ -215,7 +228,7 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
-                metricDb.save(progress);
+                metricDb.SaveChanges();
             }
             return View();
         }
@@ -232,7 +245,8 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_UPLOAD;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
-                metricDb.save(progress);
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
             }
             return View();
         }
@@ -245,7 +259,8 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUCCESS;
                 //use db context to update metrics database
-                metricDb.save(progress);
+                metricDb.Metrics.Add(progress);
+                metricDb.SaveChanges();
 
 
             }

@@ -14,6 +14,7 @@ namespace MvcMovie.DAL
         }
 
         public DbSet<Metric> Metrics { get; set; }
+        public DbSet<UserSession> UserSession { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -21,11 +22,6 @@ namespace MvcMovie.DAL
         }
 
 
-        public void save(Metric metric)
-        {
-            return;
-            //TODO - throw necessary exceptions
-        }
 
         public static implicit operator MetricDbContext(Models.Metric v)
         {

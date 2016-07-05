@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvcMovie.Models
 {
@@ -29,10 +30,11 @@ namespace MvcMovie.Models
         public static readonly string METRIC_USER_AGENT = "USER_AGENT";
         public static readonly string METRIC_LANGUAGE = "USER_LANGUAGE";
 
-        [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [Required]
+        //[Required]
         public string SessionID { get; set; }
 
         [Required]
