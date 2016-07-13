@@ -6,6 +6,7 @@ using MvcMovie.Helpers;
 using System.Web;
 using System.Linq;
 using Subgurim.Controles;
+using System.Threading;
 
 namespace MvcMovie.Controllers
 {
@@ -65,7 +66,7 @@ namespace MvcMovie.Controllers
 
                 string addressStr = Request.UserHostAddress;
                 string osStr = Request.UserAgent;
-                string[] langArr = Request.UserLanguages;
+                
 
                 if (addressStr != null)
                 {
@@ -73,7 +74,7 @@ namespace MvcMovie.Controllers
                     addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
                     addressMetric.MetricValue = addressStr;
                     addressMetric.SessionID = this.Session.SessionID;
-                    addressMetric.Timestamp = DateTime.Now;
+                    //addressMetric.Timestamp = DateTime.Now;
                     metricDb.Metrics.Add(addressMetric);
 
                     //use google maps subgurim api against max mind database to find
@@ -120,6 +121,8 @@ namespace MvcMovie.Controllers
                     metricDb.SaveChanges();
 
                 }
+
+                string[] langArr = Request.UserLanguages;
 
                 if (langArr.Length > 0)
                 {
@@ -312,11 +315,9 @@ namespace MvcMovie.Controllers
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
             // Save culture in a cookie
-            //HttpCookie cookie = Request.Cookies["_culture"];
-
-            /* DON'T save the culture in cookie until proven it works without
+            HttpCookie cookie = Request.Cookies["_culture"];
              
-             if (cookie != null)
+            if (cookie != null)
                 cookie.Value = culture;   // update cookie value
             else
             {
@@ -324,7 +325,13 @@ namespace MvcMovie.Controllers
                 cookie.Value = culture;
                 cookie.Expires = System.DateTime.Now.AddYears(1);
             }
-            Response.Cookies.Add(cookie);*/
+            Response.Cookies.Add(cookie);
+
+
+            // Modify current thread's cultures   - Could be a duplication since this
+            // is also done in BaseController         
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
             return RedirectToAction("Enter");
         }

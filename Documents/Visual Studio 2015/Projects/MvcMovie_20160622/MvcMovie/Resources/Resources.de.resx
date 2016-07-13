@@ -118,21 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Country" xml:space="preserve">
-    <value>Pais</value>
+    <value>Country</value>
   </data>
   <data name="CountryRequired" xml:space="preserve">
-    <value>Por favor enter a country, or pick any from the list</value>
+    <value>Bitte enter a country, or pick any from the list</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
-    <value>Nom de la partner</value>
+    <value>Partner Namen</value>
   </data>
   <data name="PartnerNameRequired" xml:space="preserve">
-    <value>Por favor enter a name for your organisation</value>
+    <value>Bitte enter a name for your organisation</value>
   </data>
   <data name="PartnerRef" xml:space="preserve">
-    <value>Ref de la partner</value>
+    <value>Partner Referencen</value>
   </data>
   <data name="PartnerRefRequired" xml:space="preserve">
-    <value>Por favor enter a reference for your organisation, or make one up</value>
+    <value>Bitte enter a reference for your organisation, or make one up</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Namen</value>
+  </data>
+  <data name="ProjectNameRequired" xml:space="preserve">
+    <value>Bitte enter a project name</value>
   </data>
 </root>

@@ -39,8 +39,8 @@ namespace MvcMovie.Models
         //[Required]
         public string SessionID { get; set; }
 
-        [Required]
-        public Nullable<DateTime> Timestamp { get; set; }
+        //[Required]
+        public DateTime Timestamp { get; set; }
 
         [Required]
         public String MetricName { get; set; }
