@@ -28,7 +28,7 @@ namespace MvcMovie.Models
         [Display(ResourceType = typeof(Resources.Resources), Name = "Country")]
         public string country { get; set; }
 
-        public DateTime createdDate { get; set; }
+        public Nullable<DateTime> createdDate { get; set; }
 
         public static readonly List<SelectListItem> COUNTRIES = new List<SelectListItem>()
         {

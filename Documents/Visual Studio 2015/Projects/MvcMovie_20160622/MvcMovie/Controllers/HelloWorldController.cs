@@ -4,6 +4,8 @@ using MvcMovie.DAL;
 using MvcMovie.Models;
 using MvcMovie.Helpers;
 using System.Web;
+using System.Linq;
+using Subgurim.Controles;
 
 namespace MvcMovie.Controllers
 {
@@ -73,6 +75,36 @@ namespace MvcMovie.Controllers
                     addressMetric.SessionID = this.Session.SessionID;
                     addressMetric.Timestamp = DateTime.Now;
                     metricDb.Metrics.Add(addressMetric);
+
+                    //use google maps subgurim api against max mind database to find
+                    //city and country from ip address
+                    //unfound addresses will be null
+                    Metric cityMetric = new Metric();
+                    cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
+                    Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
+                    if (loc != null) {
+                        cityMetric.MetricValue = loc.city;
+                    } else
+                    {
+                        cityMetric.MetricValue = null;
+                    }
+
+
+                    Metric countryMetric = new Metric();
+                    countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
+                    Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
+                    if (country != null)
+                    {
+                        countryMetric.MetricValue = country.countryCode;
+                    }
+                    else
+                    {
+                        countryMetric.MetricValue = null;
+                    }
+
+                    //save both metrics to database
+                    metricDb.Metrics.Add(cityMetric);
+                    metricDb.Metrics.Add(countryMetric);
                     metricDb.SaveChanges();
                 }
 
@@ -157,6 +189,7 @@ namespace MvcMovie.Controllers
             if (ModelState.IsValid)
             {
                 //use db context to update partner db
+                model.createdDate = DateTime.Now;
                 partnerDb.Partners.Add(model);
                 partnerDb.SaveChanges();
                 ViewBag.message = string.Format("Thank you. Your information has been received");
@@ -189,7 +222,7 @@ namespace MvcMovie.Controllers
                 metricDb.SaveChanges();
             }
 
-
+            var selectedConnectivities = model.Connectivities.Where(x => x.IsChecked).Select(x => x.ID).ToList();
 
             return View(model);
 
@@ -199,6 +232,11 @@ namespace MvcMovie.Controllers
         [HttpPost]
         public ActionResult Submit(Evaluation model)
         {
+
+            var selectedConnectivities = model.Connectivities.Where(x => x.IsChecked).Select(x => x.ID).ToList();
+            //todo update database with selected connectivities
+            //could cheat and put as metrics - not advisable as user entered not auto captured
+
             if (ModelState.IsValid)
             {
                 //use db context to update evaluation db
@@ -213,7 +251,7 @@ namespace MvcMovie.Controllers
                 return View(model);
             }
 
-           
+            
         }
 
         public ActionResult Validate()

@@ -50,27 +50,26 @@ if (c == culture)
         </span>
     </div>
 </div>
-<p>
-    @Resources.EnterDesc
 
-</p>
 <div class="row">
 
     @using (Html.BeginForm("SetCulture", "HelloWorld"))
     {
         <fieldset>
-            <div class="col-md-2">
-                <div class="control-group"><b>@Resources.ChooseYourLanguage</b></div>
+            <div class="col-md-12">
+                <div class="control-group"><b>
+                    @Resources.ChooseYourLanguage</b></div>
             </div>
-            <div class="col-md-10">
+            <br />
+            <div class="col-md-12">
                 <div class="control-group">
                     <div class="controls">
-                        <label for="en-us">
+                        <label for="en-us" >
                             <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English
                         </label>
                     </div>
                 </div>
-
+               
                 <div class="control-group">
                     <div class="controls">
                         <label for="es">
@@ -84,6 +83,12 @@ if (c == culture)
     }
 
 </div>
+<br/>
+<p>
+    @Resources.EnterDesc
+
+</p>
+<br/>
 @using (Html.BeginForm())
 {
 

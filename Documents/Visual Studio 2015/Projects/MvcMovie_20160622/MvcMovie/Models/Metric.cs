@@ -29,6 +29,8 @@ namespace MvcMovie.Models
         public static readonly string METRIC_IP_ADDRESS = "IP_ADDRESS";
         public static readonly string METRIC_USER_AGENT = "USER_AGENT";
         public static readonly string METRIC_LANGUAGE = "USER_LANGUAGE";
+        public static readonly string METRIC_COUNTRY_FROM_IP = "COUNTRY_FROM_IP";
+        public static readonly string METRIC_CITY_FROM_IP = "CITY_FROM_IP";
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -38,7 +40,7 @@ namespace MvcMovie.Models
         public string SessionID { get; set; }
 
         [Required]
-        public DateTime Timestamp { get; set; }
+        public Nullable<DateTime> Timestamp { get; set; }
 
         [Required]
         public String MetricName { get; set; }

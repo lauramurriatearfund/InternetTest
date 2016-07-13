@@ -41,6 +41,7 @@ namespace MvcMovie.Models
         [Display(Name = "Submission Date")]
         public DateTime submissionDate { get; set; }
 
+        [Required]
         public List<CheckBoxListItem> Connectivities { get; set; }
 
         public static readonly List<SelectListItem> THEMES = new List<SelectListItem>()

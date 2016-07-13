@@ -13,7 +13,7 @@ namespace MvcMovie.DAL
         {
             var partners = new List<Partner>
             {
-            //new Partner{partnerName="TestPartner1",partnerRef="P125234"}  //,
+            new Partner{partnerName="TestPartner1",partnerRef="P125234"}  //,
                                                                            //new Partner{PartnerName="TestPartner2",PartnerRef="P13245567",CreatedDate=DateTime.Parse("2005-09-01")},
                                                                            //new Partner{PartnerName="TestPartner3",PartnerRef="P12346754567",CreatedDate=DateTime.Parse("2005-09-01")},
                                                                            //new Partner{PartnerName="TestPartner4",PartnerRef="76353322345",CreatedDate=DateTime.Parse("2005-09-01")},
