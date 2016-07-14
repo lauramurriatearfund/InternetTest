@@ -26,18 +26,26 @@ if (c == culture)
     </script>
 }
 
-
-<script>
-    var startTime = new Date().getTime();
-
-    function onLoadEventHandler() {
-        var latency = new Date().getTime() - startTime;
-        console.log('Latency = ' + latency + 'ms');
-    }
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById('Hidden1').value = "testing !!!!!";
+        document.getElementById("postbackform").submit();
+  });
 </script>
 
+
+<form id="postbackform">
+    <div>
+
+        <input id="Hidden1" type="hidden" value="" formaction="PostbackPageLoadTime"/>
+
+    </div>
+    
+</form>
+
 <div class="row">
-    Current culture:  @System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+
     <div class="col-md-12">
         <a href="@Url.Action("Display", "HelloWorld")">
             <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>

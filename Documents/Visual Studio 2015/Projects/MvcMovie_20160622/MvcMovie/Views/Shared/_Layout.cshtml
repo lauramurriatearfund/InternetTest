@@ -10,10 +10,30 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <script>
+        var beforeload = (new Date()).getTime();
+        console.log(beforeload);
+        function getLoadTime() {
+            var afterload = (new Date()).getTime();
+            seconds = (afterload - beforeload) / 1000;
+            console.log(afterload);
+            console.log(seconds);
+            var s = document.getElementById("time");
+            console.log(s);
+            var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+            console.log(loadTime);
 
-
+            if (Math.floor(seconds) >= 1) {
+                s.innerHTML = Math.floor(seconds) + 'seconds';
+            } else {
+                s.innerHTML = seconds + 'milliseconds';
+            }
+        }
+        getLoadTime();
+    </script>
 </head>
 <body>
+    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -35,15 +55,21 @@
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Upload" ? "active" : "")">@Html.ActionLink(@Resources.UploadMenuLabel, "Upload", "HelloWorld")</li>
 
                 </ul>
-               
+
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+       
         <footer>
-            <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+            <div class="panel-footer">
+                <span id="time">Page load time: </span>
+                <p>
+                Your browser is set to use language:  @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLowerInvariant();
+                </p>
+                <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+            </div>
         </footer>
     </div>
 

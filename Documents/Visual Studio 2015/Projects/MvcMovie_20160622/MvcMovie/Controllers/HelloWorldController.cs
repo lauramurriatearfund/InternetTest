@@ -310,6 +310,17 @@ namespace MvcMovie.Controllers
 
         }
 
+        public ActionResult PostbackPageLoadTime(long time)
+        {
+            //store the time in the session and we will write it to the database 
+            //when the user moves off the page, so as not to harm user experience of page load time
+            Session.Add("PostbackPageLoadTime", time);
+
+            //TODO change this to "Text" when moving page load stat onto Text page
+            return RedirectToAction("Text");
+
+        }
+
         public ActionResult SetCulture(string culture)
         {
             // Validate input
