@@ -26,23 +26,10 @@ if (c == culture)
     </script>
 }
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        document.getElementById('Hidden1').value = "testing !!!!!";
-        document.getElementById("postbackform").submit();
-  });
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
 </script>
 
-
-<form id="postbackform">
-    <div>
-
-        <input id="Hidden1" type="hidden" value="" formaction="PostbackPageLoadTime"/>
-
-    </div>
-    
-</form>
 
 <div class="row">
 
@@ -65,19 +52,22 @@ if (c == culture)
     {
         <fieldset>
             <div class="col-md-12">
-                <div class="control-group"><b>
-                    @Resources.ChooseYourLanguage</b></div>
+                <div class="control-group">
+                    <b>
+                        @Resources.ChooseYourLanguage
+                    </b>
+                </div>
             </div>
             <br />
             <div class="col-md-12">
                 <div class="control-group">
                     <div class="controls">
-                        <label for="en-us" >
+                        <label for="en-us">
                             <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English (US)
                         </label>
                     </div>
                 </div>
-               
+
                 <div class="control-group">
                     <div class="controls">
                         <label for="es">
@@ -98,12 +88,12 @@ if (c == culture)
     }
 
 </div>
-<br/>
+<br />
 <p>
     @Resources.EnterDesc
 
 </p>
-<br/>
+<br />
 @using (Html.BeginForm())
 {
 
@@ -142,17 +132,17 @@ if (c == culture)
             </div>
         </div>
     </div>
-    <div class="row">
+        <div class="row">
 
-        <div class="col-md-12">
-            <a href="@Url.Action("Display", "HelloWorld")">
-                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
-            </a>
-            <span class="pull-right">
-                <a href="@Url.Action("Submit", "HelloWorld")">
-                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
+            <div class="col-md-12">
+                <a href="@Url.Action("Display", "HelloWorld")">
+                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
                 </a>
-            </span>
+                <span class="pull-right">
+                    <a href="@Url.Action("Submit", "HelloWorld")">
+                        <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
+                    </a>
+                </span>
+            </div>
         </div>
-    </div>
 }

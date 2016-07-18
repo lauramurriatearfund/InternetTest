@@ -169,6 +169,7 @@ namespace MvcMovie.Controllers
         [HttpGet]
         public ActionResult Enter()
         {
+       
             return View();
         }
 
@@ -310,16 +311,13 @@ namespace MvcMovie.Controllers
 
         }
 
-        public ActionResult PostbackPageLoadTime(long time)
-        {
-            //store the time in the session and we will write it to the database 
-            //when the user moves off the page, so as not to harm user experience of page load time
-            Session.Add("PostbackPageLoadTime", time);
+        public ActionResult ViewIt(){
 
-            //TODO change this to "Text" when moving page load stat onto Text page
-            return RedirectToAction("Text");
+            return View();
 
         }
+
+ 
 
         public ActionResult SetCulture(string culture)
         {
@@ -346,6 +344,8 @@ namespace MvcMovie.Controllers
 
             return RedirectToAction("Enter");
         }
+
+
 
     }
 }  

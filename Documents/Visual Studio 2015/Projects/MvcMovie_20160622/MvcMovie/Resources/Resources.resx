@@ -190,6 +190,9 @@ Remember that this is just a test so the exact information you type is not impor
   <data name="SubmitTitle" xml:space="preserve">
     <value>Submission of Project Details</value>
   </data>
+  <data name="TellUs" xml:space="preserve">
+    <value>Tell Us</value>
+  </data>
   <data name="TextMenuLabel" xml:space="preserve">
     <value>Text</value>
   </data>

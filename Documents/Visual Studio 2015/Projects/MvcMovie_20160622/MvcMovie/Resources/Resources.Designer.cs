@@ -278,6 +278,15 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tell Us.
+        /// </summary>
+        public static string TellUs {
+            get {
+                return ResourceManager.GetString("TellUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         public static string TextMenuLabel {

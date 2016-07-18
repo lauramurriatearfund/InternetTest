@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Site.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <script>
         var beforeload = (new Date()).getTime();
@@ -23,17 +24,22 @@
             var loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
             console.log(loadTime);
 
-            if (Math.floor(seconds) >= 1) {
-                s.innerHTML = Math.floor(seconds) + 'seconds';
-            } else {
-                s.innerHTML = seconds + 'milliseconds';
-            }
+
+
+
         }
         getLoadTime();
+
+
+
+        $(document).ready(function () {
+            $("#deftext").val(seconds);
+        });
     </script>
 </head>
 <body>
-    
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -61,16 +67,31 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-       
+
         <footer>
             <div class="panel-footer">
-                <span id="time">Page load time: </span>
-                <p>
-                Your browser is set to use language:  @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLowerInvariant();
-                </p>
-                <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+                <div class="row"></div>
+                <div class="form-inline">
+                    <form>
+                        <div class="col-md-9">
+                            <span id="time">Page download time: </span>
+
+                            <input type="text" class="form-control" id="deftext" contenteditable="false" width="6"> seconds <br>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" class="form-control" value="@Resources.TellUs" class="btn btn-default"></input>
+                        </div>
+                    </form>
+                </div>
+
             </div>
-        </footer>
+    </div>
+    <p>
+        Your browser is set to use language:  @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLowerInvariant();
+    </p>
+    <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+    </div>
+    </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
