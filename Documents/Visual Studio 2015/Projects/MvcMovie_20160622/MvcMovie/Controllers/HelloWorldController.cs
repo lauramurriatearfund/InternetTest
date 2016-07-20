@@ -7,11 +7,15 @@ using System.Web;
 using System.Linq;
 using Subgurim.Controles;
 using System.Threading;
+using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace MvcMovie.Controllers
 {
     public class HelloWorldController : Controller
     {
+        private Logger logger = Logger.GetLogger;
 
         private PartnerDbContext partnerDb = new PartnerDbContext();
         private MetricDbContext metricDb = new MetricDbContext();
@@ -29,13 +33,49 @@ namespace MvcMovie.Controllers
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
                 metric.SessionID = this.Session.SessionID;
-
-               
                 metricDb.Metrics.Add(metric);
-                metricDb.SaveChanges();
-                
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+
+
+
+
             }
-            
+
 
             if (this.Session.SessionID != null)
             {
@@ -45,7 +85,43 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+
             }
 
 
@@ -62,63 +138,176 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+
+
 
                 string addressStr = Request.UserHostAddress;
                 string osStr = Request.UserAgent;
-                
+
 
                 if (addressStr != null)
                 {
-                    Metric addressMetric = new Metric();
-                    addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
-                    addressMetric.MetricValue = addressStr;
-                    addressMetric.SessionID = this.Session.SessionID;
-                    //addressMetric.Timestamp = DateTime.Now;
-                    metricDb.Metrics.Add(addressMetric);
-
-                    //use google maps subgurim api against max mind database to find
-                    //city and country from ip address
-                    //unfound addresses will be null
-                    Metric cityMetric = new Metric();
-                    cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
-                    Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
-                    if (loc != null) {
-                        cityMetric.MetricValue = loc.city;
-                    } else
+                    try
                     {
-                        cityMetric.MetricValue = null;
+                        Metric addressMetric = new Metric();
+                        addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
+                        addressMetric.MetricValue = addressStr;
+                        addressMetric.SessionID = this.Session.SessionID;
+                        //addressMetric.Timestamp = DateTime.Now;
+                        metricDb.Metrics.Add(addressMetric);
+
+                        //use google maps subgurim api against max mind database to find
+                        //city and country from ip address
+                        //unfound addresses will be null
+                        Metric cityMetric = new Metric();
+                        cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
+                        Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
+                        if (loc != null)
+                        {
+                            cityMetric.MetricValue = loc.city;
+                        }
+                        else
+                        {
+                            cityMetric.MetricValue = null;
+                        }
+
+
+                        Metric countryMetric = new Metric();
+                        countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
+                        Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
+                        if (country != null)
+                        {
+                            countryMetric.MetricValue = country.countryCode;
+                        }
+                        else
+                        {
+                            countryMetric.MetricValue = null;
+                        }
+
+                        //save metrics to database
+                        metricDb.Metrics.Add(cityMetric);
+                        metricDb.Metrics.Add(countryMetric);
+
+                        metricDb.SaveChanges();
                     }
-
-
-                    Metric countryMetric = new Metric();
-                    countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
-                    Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
-                    if (country != null)
+                    catch (DbEntityValidationException ex)
                     {
-                        countryMetric.MetricValue = country.countryCode;
-                    }
-                    else
-                    {
-                        countryMetric.MetricValue = null;
-                    }
+                        foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                        {
+                            // Get entry
+                            DbEntityEntry entry = item.Entry;
+                            string entityTypeName = entry.Entity.GetType().Name;
 
-                    //save both metrics to database
-                    metricDb.Metrics.Add(cityMetric);
-                    metricDb.Metrics.Add(countryMetric);
-                    metricDb.SaveChanges();
+                            // Log error messages
+                            foreach (DbValidationError subItem in item.ValidationErrors)
+                            {
+                                string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                         subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                                logger.Log(Logger.ERROR, message, ex);
+                            }
+
+                            // Rollback changes
+                            switch (entry.State)
+                            {
+                                case EntityState.Added:
+                                    entry.State = EntityState.Detached;
+                                    break;
+                                case EntityState.Modified:
+                                    entry.CurrentValues.SetValues(entry.OriginalValues);
+                                    entry.State = EntityState.Unchanged;
+                                    break;
+                                case EntityState.Deleted:
+                                    entry.State = EntityState.Unchanged;
+                                    break;
+                            }
+                        }
+                    }
                 }
 
-                if (osStr != null) {
+                if (osStr != null)
+                {
                     Metric os = new Metric();
                     os.MetricName = Metric.METRIC_USER_AGENT;
-                    
+
                     os.MetricValue = Request.UserAgent;
                     os.SessionID = this.Session.SessionID;
                     os.Timestamp = DateTime.Now;
                     //use db context to update metrics database
                     metricDb.Metrics.Add(os);
-                    metricDb.SaveChanges();
+
+
+                    try
+                    {
+                        metricDb.SaveChanges();
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                        {
+                            // Get entry
+                            DbEntityEntry entry = item.Entry;
+                            string entityTypeName = entry.Entity.GetType().Name;
+
+                            // Log error messages
+                            foreach (DbValidationError subItem in item.ValidationErrors)
+                            {
+                                string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                         subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                                logger.Log(Logger.ERROR, message, ex);
+                            }
+
+                            // Rollback changes
+                            switch (entry.State)
+                            {
+                                case EntityState.Added:
+                                    entry.State = EntityState.Detached;
+                                    break;
+                                case EntityState.Modified:
+                                    entry.CurrentValues.SetValues(entry.OriginalValues);
+                                    entry.State = EntityState.Unchanged;
+                                    break;
+                                case EntityState.Deleted:
+                                    entry.State = EntityState.Unchanged;
+                                    break;
+                            }
+                        }
+                    }
 
                 }
 
@@ -126,8 +315,9 @@ namespace MvcMovie.Controllers
 
                 if (langArr.Length > 0)
                 {
-                    
-                    for (int i=0; i < langArr.Length;  i++) {
+
+                    for (int i = 0; i < langArr.Length; i++)
+                    {
                         Metric lang = new Metric();
                         lang.MetricName = Metric.METRIC_LANGUAGE;
                         lang.MetricValue = langArr[i];
@@ -135,17 +325,54 @@ namespace MvcMovie.Controllers
                         lang.Timestamp = DateTime.Now;
                         //use db context to update metrics database
                         metricDb.Metrics.Add(lang);
-                        metricDb.SaveChanges();
+
+                        try
+                        {
+                            metricDb.SaveChanges();
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                            {
+                                // Get entry
+                                DbEntityEntry entry = item.Entry;
+                                string entityTypeName = entry.Entity.GetType().Name;
+
+                                // Log error messages
+                                foreach (DbValidationError subItem in item.ValidationErrors)
+                                {
+                                    string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                             subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                                    logger.Log(Logger.ERROR, message, ex);
+                                }
+
+                                // Rollback changes
+                                switch (entry.State)
+                                {
+                                    case EntityState.Added:
+                                        entry.State = EntityState.Detached;
+                                        break;
+                                    case EntityState.Modified:
+                                        entry.CurrentValues.SetValues(entry.OriginalValues);
+                                        entry.State = EntityState.Unchanged;
+                                        break;
+                                    case EntityState.Deleted:
+                                        entry.State = EntityState.Unchanged;
+                                        break;
+                                }
+                            }
+                        }
+
 
 
                     }
 
                 }
-                //string geolocStr = Request.U
+                //string geolocStr = Request
                 //navigator.geolocation.getCurrentPosition
 
             }
-            
+
             return View();
         }
 
@@ -161,7 +388,44 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+
             }
             return View();
         }
@@ -169,14 +433,14 @@ namespace MvcMovie.Controllers
         [HttpGet]
         public ActionResult Enter()
         {
-       
+
             return View();
         }
 
         [HttpPost]
         public ActionResult Enter(Partner model)
-        { 
-            
+        {
+
             if (this.Session.SessionID != null)
             {
 
@@ -187,7 +451,42 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
             }
 
             if (ModelState.IsValid)
@@ -199,13 +498,14 @@ namespace MvcMovie.Controllers
                 ViewBag.message = string.Format("Thank you. Your information has been received");
                 //proceed to next tab/screen on user journey
                 return RedirectToAction("Submit");
-            } else
+            }
+            else
             {
                 //show same page for re-entry of information
                 return View();
             }
 
-            
+
         }
 
         [HttpGet]
@@ -223,7 +523,42 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
             }
 
             var selectedConnectivities = model.Connectivities.Where(x => x.IsChecked).Select(x => x.ID).ToList();
@@ -255,7 +590,7 @@ namespace MvcMovie.Controllers
                 return View(model);
             }
 
-            
+
         }
 
         public ActionResult Validate()
@@ -270,7 +605,42 @@ namespace MvcMovie.Controllers
                 progress.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
             }
             return View();
         }
@@ -288,7 +658,42 @@ namespace MvcMovie.Controllers
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
             }
             return View();
         }
@@ -302,7 +707,42 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUCCESS;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
-                metricDb.SaveChanges();
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
 
 
             }
@@ -311,13 +751,14 @@ namespace MvcMovie.Controllers
 
         }
 
-        public ActionResult ViewIt(){
+        public ActionResult ViewIt()
+        {
 
             return View();
 
         }
 
- 
+
 
         public ActionResult SetCulture(string culture)
         {
@@ -325,7 +766,7 @@ namespace MvcMovie.Controllers
             culture = CultureHelper.GetImplementedCulture(culture);
             // Save culture in a cookie
             HttpCookie cookie = Request.Cookies["_culture"];
-             
+
             if (cookie != null)
                 cookie.Value = culture;   // update cookie value
             else
@@ -345,7 +786,56 @@ namespace MvcMovie.Controllers
             return RedirectToAction("Enter");
         }
 
+        public ActionResult ReceivePageLoadTime(long seconds)
+        {
+            Metric progress = new Metric();
+            progress.MetricName = Metric.METRIC_PAGE_LOAD_TIME;
+            progress.MetricValue = seconds.ToString();
+            //use db context to update metrics database
+            metricDb.Metrics.Add(progress);
+            try
+            {
+                metricDb.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                {
+                    // Get entry
+                    DbEntityEntry entry = item.Entry;
+                    string entityTypeName = entry.Entity.GetType().Name;
+
+                    // Log error messages
+                    foreach (DbValidationError subItem in item.ValidationErrors)
+                    {
+                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                        logger.Log(Logger.ERROR, message, ex);
+                    }
+
+                    // Rollback changes
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.State = EntityState.Detached;
+                            break;
+                        case EntityState.Modified:
+                            entry.CurrentValues.SetValues(entry.OriginalValues);
+                            entry.State = EntityState.Unchanged;
+                            break;
+                        case EntityState.Deleted:
+                            entry.State = EntityState.Unchanged;
+                            break;
+                    }
+                }
+            }
+
+            //redirect back to the page the user came from
+            //this is required as the form submission is in the _Layout.cshtml
+            return Redirect(ControllerContext.HttpContext.Request.UrlReferrer.ToString());
+        }
+
 
 
     }
-}  
+}

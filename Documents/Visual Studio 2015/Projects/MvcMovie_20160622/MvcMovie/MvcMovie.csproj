@@ -210,6 +210,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Migrations\201607131010016_initial.cs" />
