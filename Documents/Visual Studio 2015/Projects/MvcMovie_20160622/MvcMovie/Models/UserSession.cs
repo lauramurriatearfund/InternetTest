@@ -10,12 +10,12 @@ namespace MvcMovie.Models
     public class UserSession
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         public string SessionID { get; set; }
 
-        public Partner partner { get; set; }
+        public Partner Partner { get; set; }
         
     }
 }

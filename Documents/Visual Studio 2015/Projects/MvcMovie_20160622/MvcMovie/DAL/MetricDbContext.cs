@@ -11,6 +11,7 @@ namespace MvcMovie.DAL
 
         public MetricDbContext() : base("MetricDbContext")
         {
+
         }
 
         public DbSet<Metric> Metrics { get; set; }

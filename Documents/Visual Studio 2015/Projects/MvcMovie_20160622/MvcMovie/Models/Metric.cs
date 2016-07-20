@@ -36,11 +36,11 @@ namespace MvcMovie.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        //[Required]
-        public string SessionID { get; set; }
+        
+        public UserSession UserSession { get; set; }
 
-        //[Required]
-        public DateTime Timestamp { get; set; }
+        
+        public DateTime? Timestamp { get; set; }
 
         [Required]
         public String MetricName { get; set; }

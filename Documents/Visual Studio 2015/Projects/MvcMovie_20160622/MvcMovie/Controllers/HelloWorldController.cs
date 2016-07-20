@@ -32,7 +32,15 @@ namespace MvcMovie.Controllers
                 metric.MetricName = Metric.METRIC_DEVICE_TYPE;
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
-                metric.SessionID = this.Session.SessionID;
+
+                //this is our first record of the user session so record it in the database
+                //as a new user session
+                //TODO  - handle scenario where user goes back to the start in the same session
+                //as currently a new usersession entry will be created in the database with 
+                //duplicate UserSession.SessionID but unique UserSession.ID
+                metric.UserSession = new UserSession();
+                metric.UserSession.SessionID = this.Session.SessionID;
+
                 metricDb.Metrics.Add(metric);
                 try
                 {
@@ -79,12 +87,13 @@ namespace MvcMovie.Controllers
 
             if (this.Session.SessionID != null)
             {
-                Metric progress = new Metric();
-                progress.MetricName = Metric.METRIC_PAGE_REACHED;
-                progress.MetricValue = Metric.PROGRESS_SCREEN_HOME;
-                progress.SessionID = this.Session.SessionID;
-                progress.Timestamp = DateTime.Now;
-                metricDb.Metrics.Add(progress);
+                Metric metric = new Metric();
+                metric.MetricName = Metric.METRIC_PAGE_REACHED;
+                metric.MetricValue = Metric.PROGRESS_SCREEN_HOME;
+                metric.UserSession = new UserSession();
+                metric.UserSession.SessionID = this.Session.SessionID;
+                metric.Timestamp = DateTime.Now;
+                metricDb.Metrics.Add(metric);
                 try
                 {
                     metricDb.SaveChanges();
@@ -135,7 +144,8 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_TEXT;
-                progress.SessionID = this.Session.SessionID;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(progress);
                 try
@@ -188,7 +198,8 @@ namespace MvcMovie.Controllers
                         Metric addressMetric = new Metric();
                         addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
                         addressMetric.MetricValue = addressStr;
-                        addressMetric.SessionID = this.Session.SessionID;
+                        addressMetric.UserSession = new UserSession();
+                        addressMetric.UserSession.SessionID = this.Session.SessionID;
                         //addressMetric.Timestamp = DateTime.Now;
                         metricDb.Metrics.Add(addressMetric);
 
@@ -198,33 +209,26 @@ namespace MvcMovie.Controllers
                         Metric cityMetric = new Metric();
                         cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
-                        if (loc != null)
+                        if (loc != null && loc.city != null)
                         {
                             cityMetric.MetricValue = loc.city;
+                            metricDb.Metrics.Add(cityMetric);
+                            metricDb.SaveChanges();
                         }
-                        else
-                        {
-                            cityMetric.MetricValue = null;
-                        }
+                        
 
 
                         Metric countryMetric = new Metric();
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
                         Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
-                        if (country != null)
+                        if (country != null && loc.countryCode != null)
                         {
                             countryMetric.MetricValue = country.countryCode;
+                            metricDb.Metrics.Add(countryMetric);
+                            metricDb.SaveChanges();
                         }
-                        else
-                        {
-                            countryMetric.MetricValue = null;
-                        }
-
-                        //save metrics to database
-                        metricDb.Metrics.Add(cityMetric);
-                        metricDb.Metrics.Add(countryMetric);
-
-                        metricDb.SaveChanges();
+                    
+                        
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -266,7 +270,8 @@ namespace MvcMovie.Controllers
                     os.MetricName = Metric.METRIC_USER_AGENT;
 
                     os.MetricValue = Request.UserAgent;
-                    os.SessionID = this.Session.SessionID;
+                    os.UserSession = new UserSession();
+                    os.UserSession.SessionID = this.Session.SessionID;
                     os.Timestamp = DateTime.Now;
                     //use db context to update metrics database
                     metricDb.Metrics.Add(os);
@@ -321,7 +326,8 @@ namespace MvcMovie.Controllers
                         Metric lang = new Metric();
                         lang.MetricName = Metric.METRIC_LANGUAGE;
                         lang.MetricValue = langArr[i];
-                        lang.SessionID = this.Session.SessionID;
+                        lang.UserSession = new UserSession();
+                        lang.UserSession.SessionID = this.Session.SessionID;
                         lang.Timestamp = DateTime.Now;
                         //use db context to update metrics database
                         metricDb.Metrics.Add(lang);
@@ -384,7 +390,8 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_DISPLAY;
-                progress.SessionID = this.Session.SessionID;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -447,7 +454,8 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_ENTER;
-                progress.SessionID = this.Session.SessionID;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -492,7 +500,7 @@ namespace MvcMovie.Controllers
             if (ModelState.IsValid)
             {
                 //use db context to update partner db
-                model.createdDate = DateTime.Now;
+                model.CreatedDate = DateTime.Now;
                 partnerDb.Partners.Add(model);
                 partnerDb.SaveChanges();
                 ViewBag.message = string.Format("Thank you. Your information has been received");
@@ -519,7 +527,8 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
-                progress.SessionID = this.Session.SessionID;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -602,7 +611,8 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
-                progress.SessionID = this.Session.SessionID;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 try

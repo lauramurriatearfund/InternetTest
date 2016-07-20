@@ -102,25 +102,25 @@ if (c == culture)
     <div class="form-horizontal">
 
         <div class="form-group">
-            @Html.LabelFor(model => model.partnerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PartnerName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ValidationMessageFor(model => model.partnerName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PartnerName, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.partnerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.PartnerName, new { htmlAttributes = new { @class = "form-control" } })
 
             </div>
             <br />
-            @Html.LabelFor(model => model.partnerRef, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PartnerRef, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ValidationMessageFor(model => model.partnerRef, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PartnerRef, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.partnerRef, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.PartnerRef, new { htmlAttributes = new { @class = "form-control" } })
 
             </div>
             <br />
-            @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(x => x.country, Partner.COUNTRIES)
+                @Html.DropDownListFor(x => x.Country, Partner.COUNTRIES)
             </div>
 
 

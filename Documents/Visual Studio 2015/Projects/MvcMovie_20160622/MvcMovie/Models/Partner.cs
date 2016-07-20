@@ -17,18 +17,18 @@ namespace MvcMovie.Models
         [Required(ErrorMessageResourceType = typeof(Resources.Resources),   ErrorMessageResourceName = "PartnerNameRequired")]
         [Display(ResourceType= typeof(Resources.Resources), Name= "PartnerName")]
         [StringLength(100, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerNameLength" , MinimumLength = 6)]
-        public string partnerName { get; set; }
+        public string PartnerName { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerRefRequired")]
         [Display(ResourceType = typeof(Resources.Resources), Name = "PartnerRef")]
         [StringLength(40, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "PartnerRefLength", MinimumLength = 6)]
-        public string partnerRef { get; set; }
+        public string PartnerRef { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "CountryRequired")]
         [Display(ResourceType = typeof(Resources.Resources), Name = "Country")]
-        public string country { get; set; }
+        public string Country { get; set; }
 
-        public DateTime createdDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public static readonly List<SelectListItem> COUNTRIES = new List<SelectListItem>()
         {

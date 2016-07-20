@@ -213,11 +213,6 @@
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
-    <Compile Include="Migrations\201607131010016_initial.cs" />
-    <Compile Include="Migrations\201607131010016_initial.Designer.cs">
-      <DependentUpon>201607131010016_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\Metric.cs" />
     <Compile Include="Models\Evaluation.cs" />
@@ -345,9 +340,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607131010016_initial.resx">
-      <DependentUpon>201607131010016_initial.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resources.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
