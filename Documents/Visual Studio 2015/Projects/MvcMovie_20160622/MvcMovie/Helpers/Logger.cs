@@ -19,16 +19,15 @@ namespace MvcMovie.Helpers
 
         private Logger() { }
 
-        public static Logger GetLogger
+        public static Logger Get()
         {
-            get
-            {
+
                 if (logger == null)
                 {
                     logger = new Logger();
                 }
                 return logger;
-            }
+ 
         }
 
         public void Log(string level, string message, Exception e)

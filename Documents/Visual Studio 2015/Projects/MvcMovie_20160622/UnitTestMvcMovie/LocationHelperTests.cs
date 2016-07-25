@@ -13,9 +13,9 @@ namespace UnitTestMvcMovie
         public void TestGetCountryLocationFromIP()
         {
             //arrange
-            String ip = "163.99.8.26";
-            String expected = "FR";
-            String actual;
+            string ip = "163.99.8.26";
+            string expected = "FR";
+            string actual;
             //act
             Location actualLoc = LocationHelper.GetCountryLocationFromIP(ip);
             if (actualLoc != null)

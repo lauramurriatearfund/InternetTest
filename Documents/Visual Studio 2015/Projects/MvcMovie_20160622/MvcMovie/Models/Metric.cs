@@ -21,7 +21,16 @@ namespace MvcMovie.Models
         public static readonly string PROGRESS_SCREEN_UPLOAD = "UPLOAD";
         public static readonly string PROGRESS_SCREEN_SUCCESS = "SUCCESS";
 
-        public static readonly string METRIC_PAGE_LOAD_TIME = "PAGE_LOAD";
+
+        public static readonly string PAGE_LOAD_TIME_TEXT = "TEXT";
+        public static readonly string PAGE_LOAD_TIME_DISPLAY = "DISPLAY";
+        public static readonly string PAGE_LOAD_TIME_ENTER = "ENTER";
+        public static readonly string PAGE_LOAD_TIME_SUBMIT = "SUBMIT";
+        public static readonly string PAGE_LOAD_TIME_VALIDATE = "VALIDATE";
+        public static readonly string PAGE_LOAD_TIME_UPLOAD = "UPLOAD";
+        public static readonly string PAGE_LOAD_TIME_SUCCESS = "SUCCESS";
+
+
         public static readonly string METRIC_PAGE_REACHED = "PAGE_REACHED";
         public static readonly string METRIC_SPEED_TEST_RESULT = "SPEED_TEST";
         public static readonly string METRIC_GEO_LOCATION = "LOCATION";

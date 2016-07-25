@@ -72,16 +72,18 @@
             <div class="panel-footer">
                 <div class="row"></div>
                 <div class="form-inline">
-                    <form>
+                    @using (Html.BeginForm("ReceivePageLoadTime", "HelloWorld"))
+                    {
+
                         <div class="col-md-9">
                             <span id="time">Page download time: </span>
 
                             <input type="text" class="form-control" id="deftext" contenteditable="false" width="6"> seconds <br>
                         </div>
                         <div class="col-md-3">
-                            <input type="submit" class="form-control" value="@Resources.TellUs" class="btn btn-default"></input>
+                            <input type="submit" value="@Resources.TellUs" class="btn btn-default">
                         </div>
-                    </form>
+                    }
                 </div>
 
             </div>

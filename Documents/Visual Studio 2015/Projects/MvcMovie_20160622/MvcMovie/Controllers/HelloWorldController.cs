@@ -16,7 +16,7 @@ namespace MvcMovie.Controllers
 {
     public class HelloWorldController : Controller
     {
-        private Logger logger = Logger.GetLogger;
+        private Logger logger = Logger.Get();
 
         private PartnerDbContext partnerDb = new PartnerDbContext();
         private MetricDbContext metricDb = new MetricDbContext();
@@ -797,14 +797,6 @@ namespace MvcMovie.Controllers
 
         }
 
-        public ActionResult ViewIt()
-        {
-
-            return View();
-
-        }
-
-
 
         public ActionResult SetCulture(string culture)
         {
@@ -832,50 +824,87 @@ namespace MvcMovie.Controllers
             return RedirectToAction("Enter");
         }
 
-        public ActionResult ReceivePageLoadTime(long seconds)
+        public ActionResult ReceivePageLoadTime(int? id)
         {
-            Metric progress = new Metric();
-            progress.MetricName = Metric.METRIC_PAGE_LOAD_TIME;
-            progress.MetricValue = seconds.ToString();
-            //use db context to update metrics database
-            metricDb.Metrics.Add(progress);
-            try
+            Metric metric = new Metric();
+
+            int? seconds =  id;
+            if (seconds != null)
             {
-                metricDb.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                metric.MetricValue = seconds.ToString();
+
+                //work out the referring page so we can log the page load time of a specific page
+                string url = Request.UrlReferrer.ToString();
+
+                string[] keys = new string[] { "Text", "Display", "Enter", "Submit", "Validate", "Update", "Success" };
+
+                string sKeyResult = keys.FirstOrDefault<string>(s => url.Contains(s));
+
+                switch (sKeyResult)
                 {
-                    // Get entry
-                    DbEntityEntry entry = item.Entry;
-                    string entityTypeName = entry.Entity.GetType().Name;
+                    case "Text":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_TEXT;
+                        break;
+                    case "Display":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_DISPLAY;
+                        break;
+                    case "Enter":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_ENTER;
+                        break;
+                    case "Submit":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_SUBMIT;
+                        break;
+                    case "Validate":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_VALIDATE;
+                        break;
+                    case "Update":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_UPLOAD;
+                        break;
+                    case "Success":
+                        metric.MetricName = Metric.PAGE_LOAD_TIME_SUCCESS;
+                        break;
 
-                    // Log error messages
-                    foreach (DbValidationError subItem in item.ValidationErrors)
-                    {
-                        string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                 subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                        logger.Log(Logger.ERROR, message, ex);
-                    }
+                }
 
-                    // Rollback changes
-                    switch (entry.State)
+                //use db context to update metrics database
+                metricDb.Metrics.Add(metric);
+                try
+                {
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
                     {
-                        case EntityState.Added:
-                            entry.State = EntityState.Detached;
-                            break;
-                        case EntityState.Modified:
-                            entry.CurrentValues.SetValues(entry.OriginalValues);
-                            entry.State = EntityState.Unchanged;
-                            break;
-                        case EntityState.Deleted:
-                            entry.State = EntityState.Unchanged;
-                            break;
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
                     }
                 }
             }
-
             //redirect back to the page the user came from
             //this is required as the form submission is in the _Layout.cshtml
             return Redirect(ControllerContext.HttpContext.Request.UrlReferrer.ToString());
