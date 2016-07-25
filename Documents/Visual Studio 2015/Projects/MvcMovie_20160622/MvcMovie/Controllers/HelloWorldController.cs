@@ -10,6 +10,7 @@ using System.Threading;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using MvcMovie.Resources;
 
 namespace MvcMovie.Controllers
 {
@@ -215,7 +216,7 @@ namespace MvcMovie.Controllers
                             metricDb.Metrics.Add(cityMetric);
                             metricDb.SaveChanges();
                         }
-                        
+
 
 
                         Metric countryMetric = new Metric();
@@ -227,8 +228,8 @@ namespace MvcMovie.Controllers
                             metricDb.Metrics.Add(countryMetric);
                             metricDb.SaveChanges();
                         }
-                    
-                        
+
+
                     }
                     catch (DbEntityValidationException ex)
                     {
@@ -502,8 +503,43 @@ namespace MvcMovie.Controllers
                 //use db context to update partner db
                 model.CreatedDate = DateTime.Now;
                 partnerDb.Partners.Add(model);
-                partnerDb.SaveChanges();
-                ViewBag.message = string.Format("Thank you. Your information has been received");
+                try
+                {
+                    partnerDb.SaveChanges();
+                    ViewBag.message = string.Format(Resources.Resources.InfoReceived);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
                 //proceed to next tab/screen on user journey
                 return RedirectToAction("Submit");
             }

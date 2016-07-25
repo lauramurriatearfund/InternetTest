@@ -170,6 +170,15 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thank you. Your information has been received.
+        /// </summary>
+        public static string InfoReceived {
+            get {
+                return ResourceManager.GetString("InfoReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Partner Name.
         /// </summary>
         public static string PartnerName {
