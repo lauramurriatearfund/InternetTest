@@ -258,29 +258,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="mini\crossdomain.xml" />
-    <Content Include="mini\index-asp.html" />
-    <Content Include="mini\index-aspx.html" />
-    <Content Include="mini\index-jsp.html" />
-    <Content Include="mini\index-php.html" />
-    <Content Include="mini\README.txt" />
-    <Content Include="mini\speedtest.swf" />
-    <Content Include="mini\speedtest\expressInstall.swf" />
-    <Content Include="mini\speedtest\latency.txt" />
-    <Content Include="mini\speedtest\random1000x1000.jpg" />
-    <Content Include="mini\speedtest\random1500x1500.jpg" />
-    <Content Include="mini\speedtest\random2000x2000.jpg" />
-    <Content Include="mini\speedtest\random2500x2500.jpg" />
-    <Content Include="mini\speedtest\random3000x3000.jpg" />
-    <Content Include="mini\speedtest\random3500x3500.jpg" />
-    <Content Include="mini\speedtest\random350x350.jpg" />
-    <Content Include="mini\speedtest\random4000x4000.jpg" />
-    <Content Include="mini\speedtest\random500x500.jpg" />
-    <Content Include="mini\speedtest\random750x750.jpg" />
-    <Content Include="mini\speedtest\swfobject.js" />
-    <Content Include="mini\speedtest\upload.asp" />
-    <Content Include="mini\speedtest\upload.aspx" />
-    <Content Include="mini\swfobject.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -288,8 +265,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="mini\speedtest\upload.jsp" />
-    <Content Include="mini\speedtest\upload.php" />
     <Content Include="App_Data\GeoLite2-City.mmdb" />
     <Content Include="App_Data\GeoLite2-Country.mmdb" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
