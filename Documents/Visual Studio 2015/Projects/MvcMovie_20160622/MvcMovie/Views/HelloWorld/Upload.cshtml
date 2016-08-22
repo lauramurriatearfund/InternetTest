@@ -1,9 +1,11 @@
 ﻿<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
-<p></p>
-<p></p>
-<p></p>
+
 @ViewBag.formSubmitSuccess
 @using MvcMovie.Resources;
+
+<br />
+<br />
+<br />
 <div class="row">
 
     <div class="col-md-12">
@@ -22,19 +24,19 @@
     Remember that this is just a test so the exact files you attach are not important i.e. feel free to make it up!
 </p>
 
-    @using (Html.BeginForm("", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+@using (Html.BeginForm("", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="file" name="FileUpload1" class="filestyle" /><br />
-                <input type="file" name="FileUpload2" /><br />
-                <input type="file" name="FileUpload3" /><br />
-                <input type="file" name="FileUpload4" /><br />
-                <input type="file" name="FileUpload5" /><br />
-                <input type="submit" value="@Resources.Upload" class="btn btn-default" formaction="Upload" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="file" name="FileUpload1" class="filestyle" /><br />
+            <input type="file" name="FileUpload2" /><br />
+            <input type="file" name="FileUpload3" /><br />
+            <input type="file" name="FileUpload4" /><br />
+            <input type="file" name="FileUpload5" /><br />
+            <input type="submit" value="@Resources.Upload" class="btn btn-default" formaction="Upload" />
         </div>
+    </div>
 
         <div class="row">
 
@@ -50,5 +52,5 @@
             </div>
         </div>
 
-    }
+}
 

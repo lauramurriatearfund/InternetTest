@@ -204,13 +204,18 @@ namespace MvcMovie.Controllers
                         addressMetric.UserSession.SessionID = this.Session.SessionID;
                         addressMetric.Timestamp = DateTime.Now;
                         metricDb.Metrics.Add(addressMetric);
+                        metricDb.SaveChanges();
 
                         //use google maps subgurim api against max mind database to find
                         //city and country from ip address
                         //unfound addresses will be null or -- these are screened out
                         Metric cityMetric = new Metric();
                         cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
+                        cityMetric.UserSession = new UserSession();
+                        cityMetric.UserSession.SessionID = this.Session.SessionID;
+                        cityMetric.Timestamp = DateTime.Now;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
+                        logger.Log(Logger.DEBUG,"City returned from subgurim api was: " + loc.city, null);
                         if (loc != null && loc.city != null && loc.city != "--")
                         {
                             cityMetric.MetricValue = loc.city;
@@ -220,8 +225,14 @@ namespace MvcMovie.Controllers
                         
                         Metric countryMetric = new Metric();
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
+                      
+                        countryMetric.UserSession = new UserSession();
+                        countryMetric.UserSession.SessionID = this.Session.SessionID;
+                        countryMetric.Timestamp = DateTime.Now;
                         Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
-                        if (country != null && loc.countryCode != null && loc.city != "--")
+                        logger.Log(Logger.DEBUG, "Country returned from subgurim api was: " + country.countryCode, null);
+                        if (loc != null && loc.city != null && loc.city != "--")
+                            if (country != null && country.countryCode != null && country.city != "--")
                         {
                             countryMetric.MetricValue = country.countryCode;
                             metricDb.Metrics.Add(countryMetric);

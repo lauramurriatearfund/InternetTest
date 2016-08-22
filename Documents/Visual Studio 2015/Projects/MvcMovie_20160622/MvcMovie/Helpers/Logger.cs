@@ -32,11 +32,11 @@ namespace MvcMovie.Helpers
 
         public void Log(string level, string message, Exception e)
         {
-            Debug.WriteLine(level + ":  " + message);
+            Trace.WriteLine(level + ":  " + message);
             
             if (e != null)
             {
-                Debug.WriteLine("Exception:  " + e.ToString());
+                Trace.WriteLine("Exception:  " + e.ToString());
             }
             
         }

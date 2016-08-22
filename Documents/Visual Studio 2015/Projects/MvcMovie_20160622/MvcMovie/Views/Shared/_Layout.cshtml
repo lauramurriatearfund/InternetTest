@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink(Resources.ApplicationName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(Resources.ApplicationName, "Index", "HelloWorld", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -70,30 +70,35 @@
 
         <footer>
             <div class="panel-footer">
-                <div class="row"></div>
-                <div class="form-inline">
-                    @using (Html.BeginForm("ReceivePageLoadTime", "HelloWorld"))
-                    {
+                <div class="row">
+                    <div class="form-inline">
+                        @using (Html.BeginForm("ReceivePageLoadTime", "HelloWorld"))
+                        {
 
-                        <div class="col-md-9">
-                            <span id="time">Page download time: </span>
+                            <div class="col-xs-3">
+                                <span id="time">Page download time (seconds): </span>
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" id="deftext" contenteditable="false"><br>
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="submit" value="@Resources.TellUs" class="btn btn-default">
+                            </div>
+                        }
+                    </div>
 
-                            <input type="text" class="form-control" id="deftext" contenteditable="false" width="6"> seconds <br>
-                        </div>
-                        <div class="col-md-3">
-                            <input type="submit" value="@Resources.TellUs" class="btn btn-default">
-                        </div>
-                    }
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+
+                        Your browser is set to use language:  @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLowerInvariant();
+
+                        <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
+                    </div>
+                </div>
             </div>
-    </div>
-    <p>
-        Your browser is set to use language:  @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLowerInvariant();
-    </p>
-    <p>&copy; @DateTime.Now.Year - Internet Testing Application</p>
-    </div>
-    </footer>
+        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

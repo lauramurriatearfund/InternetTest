@@ -30,7 +30,9 @@ if (c == culture)
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js">
 </script>
 
-
+<br />
+<br />
+<br />
 <div class="row">
 
     <div class="col-md-12">
@@ -139,17 +141,17 @@ if (c == culture)
             </div>
         </div>
     </div>
-        <div class="row">
-
-            <div class="col-md-12">
-                <a href="@Url.Action("Display", "HelloWorld")">
-                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Display", "HelloWorld")">
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
+            </a>
+            <span class="pull-right">
+                <a href="@Url.Action("Submit", "HelloWorld")">
+                    <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
                 </a>
-                <span class="pull-right">
-                    <a href="@Url.Action("Submit", "HelloWorld")">
-                        <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
-                    </a>
-                </span>
-            </div>
+            </span>
         </div>
+    </div>
+    
 }
