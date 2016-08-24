@@ -13,6 +13,7 @@ namespace MvcMovie.Helpers
         {
             Location loc = null;
             string databasePath = HttpContext.Current.Server.MapPath("~/App_Data/GeoLite2-City.mmdb");
+            
 
             if (databasePath != null)
             {
@@ -24,7 +25,7 @@ namespace MvcMovie.Helpers
                 else
                 {
                     //cannot write to logger from static context so just output to console
-                    Console.WriteLine("Mapping database was not opened at " + databasePath, null);
+                    Console.Write("Mapping database was not opened at " + databasePath, null);
                 }
             }
             else
