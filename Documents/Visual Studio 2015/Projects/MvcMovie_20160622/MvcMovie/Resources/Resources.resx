@@ -138,6 +138,9 @@
   <data name="Create" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="Dialup" xml:space="preserve">
+    <value>Dialup</value>
+  </data>
   <data name="DisplayMenuLabel" xml:space="preserve">
     <value>Display</value>
   </data>
@@ -151,11 +154,23 @@ Remember that this is just a test so the exact information you type is not impor
   <data name="EnterTitle" xml:space="preserve">
     <value>Entry of Partner Details</value>
   </data>
+  <data name="FourG" xml:space="preserve">
+    <value>4G</value>
+  </data>
+  <data name="GPRS" xml:space="preserve">
+    <value>GPRS</value>
+  </data>
+  <data name="HighSpeedBroadband" xml:space="preserve">
+    <value>High Speed Broadband</value>
+  </data>
   <data name="HomeMenuLabel" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="InfoReceived" xml:space="preserve">
     <value>Thank you. Your information has been received</value>
+  </data>
+  <data name="LowSpeedBroadband" xml:space="preserve">
+    <value>Low Speed Broadband</value>
   </data>
   <data name="PartnerName" xml:space="preserve">
     <value>Partner Name</value>
@@ -184,6 +199,12 @@ Remember that this is just a test so the exact information you type is not impor
   <data name="ProjectNameRequired" xml:space="preserve">
     <value>Please enter a name for your project, or make one up</value>
   </data>
+  <data name="SatellitePhone" xml:space="preserve">
+    <value>Satellite Phone</value>
+  </data>
+  <data name="SMS" xml:space="preserve">
+    <value>SMS</value>
+  </data>
   <data name="SubmitDesc" xml:space="preserve">
     <value>Please complete the form below as best you can. The exact information is not important</value>
   </data>
@@ -201,6 +222,9 @@ Remember that this is just a test so the exact information you type is not impor
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
+  </data>
+  <data name="ThreeG" xml:space="preserve">
+    <value>3G</value>
   </data>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>

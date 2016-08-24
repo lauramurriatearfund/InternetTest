@@ -216,7 +216,7 @@ namespace MvcMovie.Controllers
                         cityMetric.Timestamp = DateTime.Now;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG,"City returned from subgurim api was: " + loc.city, null);
-                        if (loc != null && loc.city != null && loc.city != "--")
+                        if (loc != null && loc.city != null && loc.city != "  ")
                         {
                             cityMetric.MetricValue = loc.city;
                             metricDb.Metrics.Add(cityMetric);
@@ -634,7 +634,8 @@ namespace MvcMovie.Controllers
             if (ModelState.IsValid)
             {
                 //use db context to update evaluation db
-                evalDb.save(model);
+                evalDb.Evaluations.Add(model);
+                evalDb.SaveChanges();
                 ViewBag.message = string.Format("Thank you. Your information has been received");
                 //proceed to next tab/screen on user journey
                 return RedirectToAction("Validate");

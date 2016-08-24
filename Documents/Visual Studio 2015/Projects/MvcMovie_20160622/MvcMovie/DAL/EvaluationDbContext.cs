@@ -21,12 +21,6 @@ namespace MvcMovie.DAL
         }
 
 
-        public void save(Evaluation evaluation)
-        {
-            return;
-            //TODO - throw necessary exceptions
-        }
-
         public static implicit operator EvaluationDbContext(Evaluation v)
         {
             throw new NotImplementedException();

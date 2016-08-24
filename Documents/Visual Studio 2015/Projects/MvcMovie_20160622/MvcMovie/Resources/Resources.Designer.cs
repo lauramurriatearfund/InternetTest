@@ -124,6 +124,15 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dialup.
+        /// </summary>
+        public static string Dialup {
+            get {
+                return ResourceManager.GetString("Dialup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display.
         /// </summary>
         public static string DisplayMenuLabel {
@@ -161,6 +170,33 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 4G.
+        /// </summary>
+        public static string FourG {
+            get {
+                return ResourceManager.GetString("FourG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPRS.
+        /// </summary>
+        public static string GPRS {
+            get {
+                return ResourceManager.GetString("GPRS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High Speed Broadband.
+        /// </summary>
+        public static string HighSpeedBroadband {
+            get {
+                return ResourceManager.GetString("HighSpeedBroadband", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string HomeMenuLabel {
@@ -175,6 +211,15 @@ namespace MvcMovie.Resources {
         public static string InfoReceived {
             get {
                 return ResourceManager.GetString("InfoReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low Speed Broadband.
+        /// </summary>
+        public static string LowSpeedBroadband {
+            get {
+                return ResourceManager.GetString("LowSpeedBroadband", resourceCulture);
             }
         }
         
@@ -260,6 +305,24 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satellite Phone.
+        /// </summary>
+        public static string SatellitePhone {
+            get {
+                return ResourceManager.GetString("SatellitePhone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMS.
+        /// </summary>
+        public static string SMS {
+            get {
+                return ResourceManager.GetString("SMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please complete the form below as best you can. The exact information is not important.
         /// </summary>
         public static string SubmitDesc {
@@ -310,6 +373,15 @@ namespace MvcMovie.Resources {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3G.
+        /// </summary>
+        public static string ThreeG {
+            get {
+                return ResourceManager.GetString("ThreeG", resourceCulture);
             }
         }
         

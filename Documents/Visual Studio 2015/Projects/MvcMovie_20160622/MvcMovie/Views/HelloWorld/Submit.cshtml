@@ -11,28 +11,29 @@
 
 
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div>
-            @if (ViewBag.message != null) {
-                <div class="alert alert-success">ViewBag.formSubmitSuccess</div>
-            }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @if (ViewBag.message != null)
+        {
+            <div class="alert alert-success">ViewBag.formSubmitSuccess</div>
+        }
 
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <a href="@Url.Action("Enter", "HelloWorld")">
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
+            </a>
+            <span class="pull-right">
+
+                <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue" />
+
+            </span>
         </div>
-        <div class="row">
-
-            <div class="col-md-12">
-                <a href="@Url.Action("Enter", "HelloWorld")">
-                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
-                </a>
-                <span class="pull-right">
-
-                    <input type="image"  src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue" />
-
-                </span>
-            </div>
-        </div>
+    </div>
 
         <div class="form-horizontal">
             @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -41,12 +42,12 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.projectName, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-                <br/>
+                <br />
                 @Html.LabelFor(model => model.theme, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(x => x.theme, Evaluation.THEMES)
                 </div>
-                <br/>
+                <br />
                 <div class="col-md-10">
                     @Html.EditorFor(x => x.Connectivities)
                 </div>
@@ -54,7 +55,7 @@
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.submissionDate, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-                <br/>
+                <br />
                 @Html.LabelFor(model => model.supportingText1, htmlAttributes: new { @class = "control-label col-md-2" })
 
                 <div class="col-md-10">
@@ -75,26 +76,25 @@
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.supportingText4, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@Resources.Create" class="btn btn-default"  />
+
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="@Resources.Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-md-12">
-                <a href="@Url.Action("Enter", "HelloWorld")">
-                    <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
-                </a>
-                <span class="pull-right">
-                    <a href="@Url.Action("Validate", "HelloWorld")">
-                        <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
+                <div class="col-md-12">
+                    <a href="@Url.Action("Enter", "HelloWorld")">
+                        <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
                     </a>
-                </span>
+                    <span class="pull-right">
+                        <a href="@Url.Action("Validate", "HelloWorld")">
+                            <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
+                        </a>
+                    </span>
+                </div>
             </div>
-        </div>
 
-    }
+}

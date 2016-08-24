@@ -11,25 +11,23 @@ namespace MvcMovie.Models
         public Evaluation()
         {
             Connectivities = new List<CheckBoxListItem>();
-            Connectivities.Add(new CheckBoxListItem() { ID = 1, Display = "Dialup", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 2, Display = "GPRS", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 3, Display = "3G", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 4, Display = "4G", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 5, Display = "Low speed broadband", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 6, Display = "High speed broadband", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 7, Display = "Satelite phone", IsChecked = false });
-            Connectivities.Add(new CheckBoxListItem() { ID = 8, Display = "SMS", IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 1, Display = Resources.Resources.Dialup, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 2, Display = Resources.Resources.GPRS, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 3, Display = Resources.Resources.ThreeG, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 4, Display = Resources.Resources.FourG, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 5, Display = Resources.Resources.LowSpeedBroadband, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 6, Display = Resources.Resources.HighSpeedBroadband, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 7, Display = Resources.Resources.SatellitePhone, IsChecked = false });
+            Connectivities.Add(new CheckBoxListItem() { ID = 8, Display = Resources.Resources.SMS, IsChecked = false });
         }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         public Partner partner { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "ProjectNameRequired")]
         [Display(ResourceType = typeof(Resources.Resources), Name = "ProjectName")]
-        [StringLength(100, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "ProjectNameLength", MinimumLength = 6)]
         public string projectName { get; set; }
 
         [Display(Name = "Project Reference")]
