@@ -62,20 +62,8 @@
                     @Html.TextAreaFor(model => model.supportingText1, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
                 <br />
-                @Html.LabelFor(model => model.supportingText2, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.supportingText2, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <br />
-                @Html.LabelFor(model => model.supportingText3, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.supportingText3, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <br />
-                @Html.LabelFor(model => model.supportingText4, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.supportingText4, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+
+
 
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="@Resources.Create" class="btn btn-default" />
@@ -90,9 +78,7 @@
                         <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
                     </a>
                     <span class="pull-right">
-                        <a href="@Url.Action("Validate", "HelloWorld")">
-                            <image src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue"></image>
-                        </a>
+                        <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue" />
                     </span>
                 </div>
             </div>

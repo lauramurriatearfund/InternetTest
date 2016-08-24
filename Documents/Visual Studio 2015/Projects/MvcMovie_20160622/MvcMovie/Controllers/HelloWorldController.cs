@@ -17,7 +17,6 @@ namespace MvcMovie.Controllers
     public class HelloWorldController : Controller
     {
         private Logger logger = Logger.Get();
-
         private PartnerDbContext partnerDb = new PartnerDbContext();
         private MetricDbContext metricDb = new MetricDbContext();
         private UserSessionDbContext sessionDb = new UserSessionDbContext();
@@ -215,17 +214,17 @@ namespace MvcMovie.Controllers
                         cityMetric.UserSession.SessionID = this.Session.SessionID;
                         cityMetric.Timestamp = DateTime.Now;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
-                        logger.Log(Logger.DEBUG,"City returned from subgurim api was: " + loc.city, null);
+                        logger.Log(Logger.DEBUG, "City returned from subgurim api was: " + loc.city, null);
                         if (loc != null && loc.city != null && loc.city != "  ")
                         {
                             cityMetric.MetricValue = loc.city;
                             metricDb.Metrics.Add(cityMetric);
                             metricDb.SaveChanges();
                         }
-                        
+
                         Metric countryMetric = new Metric();
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
-                      
+
                         countryMetric.UserSession = new UserSession();
                         countryMetric.UserSession.SessionID = this.Session.SessionID;
                         countryMetric.Timestamp = DateTime.Now;
@@ -233,11 +232,11 @@ namespace MvcMovie.Controllers
                         logger.Log(Logger.DEBUG, "Country returned from subgurim api was: " + country.countryCode, null);
                         if (loc != null && loc.city != null && loc.city != "--")
                             if (country != null && country.countryCode != null && country.city != "--")
-                        {
-                            countryMetric.MetricValue = country.countryCode;
-                            metricDb.Metrics.Add(countryMetric);
-                            metricDb.SaveChanges();
-                        }
+                            {
+                                countryMetric.MetricValue = country.countryCode;
+                                metricDb.Metrics.Add(countryMetric);
+                                metricDb.SaveChanges();
+                            }
 
 
                     }
@@ -459,15 +458,60 @@ namespace MvcMovie.Controllers
         public ActionResult Enter(Partner model)
         {
 
+            //capture the user session
             if (this.Session.SessionID != null)
             {
+                //store the partner ref in the session for use later 
+                //this should also force iis to session track 
+                Session["PartnerRef"] = model.PartnerRef;
 
+                UserSession userSessionRecord = new UserSession();
+                userSessionRecord.SessionID = Session.
+                try
+                {
+                    sessionDb.UserSessions.Add(userSessionRecord);
+                    sessionDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+
+                }
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_ENTER;
                 progress.UserSession = new UserSession();
                 progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
+
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
                 try
@@ -839,7 +883,7 @@ namespace MvcMovie.Controllers
         {
             Metric metric = new Metric();
 
-            int? seconds =  id;
+            int? seconds = id;
             if (seconds != null)
             {
                 metric.MetricValue = seconds.ToString();
