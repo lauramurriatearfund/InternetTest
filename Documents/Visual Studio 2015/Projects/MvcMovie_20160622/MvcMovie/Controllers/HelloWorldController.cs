@@ -852,33 +852,6 @@ namespace MvcMovie.Controllers
 
         }
 
-
-        public ActionResult SetCulture(string culture)
-        {
-            // Validate input
-            culture = CultureHelper.GetImplementedCulture(culture);
-            // Save culture in a cookie
-            HttpCookie cookie = Request.Cookies["_culture"];
-
-            if (cookie != null)
-                cookie.Value = culture;   // update cookie value
-            else
-            {
-                cookie = new HttpCookie("_culture");
-                cookie.Value = culture;
-                cookie.Expires = System.DateTime.Now.AddYears(1);
-            }
-            Response.Cookies.Add(cookie);
-
-
-            // Modify current thread's cultures   - Could be a duplication since this
-            // is also done in BaseController         
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-
-            return RedirectToAction("Enter");
-        }
-
         public ActionResult ReceivePageLoadTime(int? id)
         {
             Metric metric = new Metric();

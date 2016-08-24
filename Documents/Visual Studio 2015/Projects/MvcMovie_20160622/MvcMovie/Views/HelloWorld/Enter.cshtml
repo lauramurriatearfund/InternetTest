@@ -35,55 +35,6 @@ if (c == culture)
 <br />
 
 
-<div class="row">
-
-    @using (Html.BeginForm("SetCulture", "HelloWorld"))
-    {
-        <fieldset>
-            <div class="col-md-12">
-                <div class="control-group">
-                    <b>
-                        @Resources.ChooseYourLanguage
-                    </b>
-                </div>
-            </div>
-            <br />
-            <div class="col-md-12">
-                <div class="control-group">
-                    <div class="controls">
-                        <label for="en-us">
-                            <input name="culture" id="en-us" value="en-us" type="radio" @selected("en-us", culture) /> English (US)
-                        </label>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <label for="en-us">
-                            <input name="culture" id="fr" value="fr" type="radio" @selected("fr", culture) /> Français
-                        </label>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <label for="es">
-                            <input name="culture" id="es" value="es" type="radio" @selected("es", culture) /> Español
-                        </label>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <label for="de">
-                            <input name="culture" id="pt" value="pt" type="radio" @selected("pt", culture) /> Portugués
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-
-    }
-
-</div>
 
 @using (Html.BeginForm())
 {
