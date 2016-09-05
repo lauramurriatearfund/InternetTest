@@ -183,6 +183,51 @@ namespace MvcMovie.Controllers
                                 break;
                         }
                     }
+
+                }
+
+                UserSession userSessionUpdate = new UserSession();
+                userSessionUpdate.SessionID = this.Session.SessionID;
+
+                try
+                {
+                    //check to see whether this session already exists
+                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionID);
+                    //update with latest values
+                    sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
+                    sessionDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
                 }
 
 
@@ -465,11 +510,19 @@ namespace MvcMovie.Controllers
                 //this should also force iis to session track 
                 Session["PartnerRef"] = model.PartnerRef;
 
-                UserSession userSessionRecord = new UserSession();
-                userSessionRecord.SessionID = Session.
+
+                //update the existing session record with
+                //the newly discovered partner ref
+                UserSession userSessionUpdate = new UserSession();
+                userSessionUpdate.SessionID = this.Session.SessionID;
+                logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
+
                 try
                 {
-                    sessionDb.UserSessions.Add(userSessionRecord);
+                    //check to see whether this session already exists
+                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionID);
+                    //update with latest values
+                    sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
                     sessionDb.SaveChanges();
                 }
                 catch (DbEntityValidationException ex)
@@ -510,6 +563,7 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_ENTER;
                 progress.UserSession = new UserSession();
                 progress.UserSession.SessionID = this.Session.SessionID;
+                logger.Log(Logger.DEBUG, "User Session ID: " + this.Session.SessionID, null);
                 progress.Timestamp = DateTime.Now;
 
                 //use db context to update metrics database
@@ -610,7 +664,7 @@ namespace MvcMovie.Controllers
         public ActionResult Submit()
         {
             var model = new Evaluation();
-            model.submissionDate = DateTime.Today;
+            model.submissionDate = DateTime.Now;
 
             if (this.Session.SessionID != null)
             {
@@ -619,7 +673,9 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
                 progress.UserSession = new UserSession();
                 progress.UserSession.SessionID = this.Session.SessionID;
+                logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
                 progress.Timestamp = DateTime.Now;
+
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
                 try

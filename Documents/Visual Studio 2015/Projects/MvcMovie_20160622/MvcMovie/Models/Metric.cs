@@ -45,7 +45,8 @@ namespace MvcMovie.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        
+        public string UserSessionID  { get; set;}
+
         public UserSession UserSession { get; set; }
 
         

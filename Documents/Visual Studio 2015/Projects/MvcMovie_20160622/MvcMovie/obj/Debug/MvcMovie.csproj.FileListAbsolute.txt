@@ -171,3 +171,9 @@ C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\Mvc
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\es\MvcMovie.resources.dll
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\MvcMovie.dll
 C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\MvcMovie.pdb
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\bin\fr\MvcMovie.resources.dll
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\bin\pt\MvcMovie.resources.dll
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\MvcMovie.Resources.Resources.fr.resources
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\MvcMovie.Resources.Resources.pt.resources
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\fr\MvcMovie.resources.dll
+C:\Users\lauramurria\Documents\Visual Studio 2015\Projects\MvcMovie_20160622\MvcMovie\obj\Debug\pt\MvcMovie.resources.dll

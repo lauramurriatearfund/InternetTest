@@ -15,6 +15,8 @@ namespace MvcMovie.Models
 
         public string SessionID { get; set; }
 
+        public int? PartnerID { get; set; }
+
         public Partner Partner { get; set; }
         
     }
