@@ -10,7 +10,7 @@ namespace MvcMovie.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PartnerID { get; set; }
+        public int PartnerId { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Resources),   ErrorMessageResourceName = "PartnerNameRequired")]
         [Display(ResourceType= typeof(Resources.Resources), Name= "PartnerName")]

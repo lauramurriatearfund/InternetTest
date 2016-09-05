@@ -15,7 +15,7 @@ namespace MvcMovie.DAL
         }
 
         public DbSet<Metric> Metrics { get; set; }
-        public DbSet<UserSession> UserSession { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

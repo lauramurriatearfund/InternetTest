@@ -24,7 +24,53 @@ namespace MvcMovie.Controllers
 
         public ActionResult Index()
         {
-            // Update Metrics database with users browser/device type
+            //first check whether the user session is already in the database, and if not, add it
+            UserSession userSess = sessionDb.UserSessions.Find(this.Session.SessionID);
+            if (userSess == null)
+            {
+                sessionDb.UserSessions.Add(new UserSession(this.Session.SessionID));
+
+                try
+                {
+                    sessionDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+
+
+            }
+
+            // Update Metrics database with user's browser/device type
             string strUserAgent = Request.UserAgent.ToString().ToLower();
             if (strUserAgent != null && this.Session.SessionID != null)
             {
@@ -32,18 +78,11 @@ namespace MvcMovie.Controllers
                 metric.MetricName = Metric.METRIC_DEVICE_TYPE;
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
-
-                //this is our first record of the user session so record it in the database
-                //as a new user session
-                //TODO  - handle scenario where user goes back to the start in the same session
-                //as currently a new usersession entry will be created in the database with 
-                //duplicate UserSession.SessionID but unique UserSession.ID
-                metric.UserSession = new UserSession();
-                metric.UserSession.SessionID = this.Session.SessionID;
-
-                metricDb.Metrics.Add(metric);
+                metric.UserSessionId = this.Session.SessionID;
+ 
                 try
                 {
+                    metricDb.Metrics.Add(metric);
                     metricDb.SaveChanges();
                 }
                 catch (DbEntityValidationException ex)
@@ -91,7 +130,7 @@ namespace MvcMovie.Controllers
                 metric.MetricName = Metric.METRIC_PAGE_REACHED;
                 metric.MetricValue = Metric.PROGRESS_SCREEN_HOME;
                 metric.UserSession = new UserSession();
-                metric.UserSession.SessionID = this.Session.SessionID;
+                metric.UserSession.SessionId = this.Session.SessionID;
                 metric.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(metric);
                 try
@@ -144,8 +183,6 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_TEXT;
-                progress.UserSession = new UserSession();
-                progress.UserSession.SessionID = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(progress);
                 try
@@ -187,12 +224,12 @@ namespace MvcMovie.Controllers
                 }
 
                 UserSession userSessionUpdate = new UserSession();
-                userSessionUpdate.SessionID = this.Session.SessionID;
+                userSessionUpdate.SessionId = this.Session.SessionID;
 
                 try
                 {
                     //check to see whether this session already exists
-                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionID);
+                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionId);
                     //update with latest values
                     sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
                     sessionDb.SaveChanges();
@@ -245,7 +282,7 @@ namespace MvcMovie.Controllers
                         addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
                         addressMetric.MetricValue = addressStr;
                         addressMetric.UserSession = new UserSession();
-                        addressMetric.UserSession.SessionID = this.Session.SessionID;
+                        addressMetric.UserSession.SessionId = this.Session.SessionID;
                         addressMetric.Timestamp = DateTime.Now;
                         metricDb.Metrics.Add(addressMetric);
                         metricDb.SaveChanges();
@@ -256,7 +293,7 @@ namespace MvcMovie.Controllers
                         Metric cityMetric = new Metric();
                         cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
                         cityMetric.UserSession = new UserSession();
-                        cityMetric.UserSession.SessionID = this.Session.SessionID;
+                        cityMetric.UserSession.SessionId = this.Session.SessionID;
                         cityMetric.Timestamp = DateTime.Now;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "City returned from subgurim api was: " + loc.city, null);
@@ -271,7 +308,7 @@ namespace MvcMovie.Controllers
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
 
                         countryMetric.UserSession = new UserSession();
-                        countryMetric.UserSession.SessionID = this.Session.SessionID;
+                        countryMetric.UserSession.SessionId = this.Session.SessionID;
                         countryMetric.Timestamp = DateTime.Now;
                         Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "Country returned from subgurim api was: " + country.countryCode, null);
@@ -326,7 +363,7 @@ namespace MvcMovie.Controllers
 
                     os.MetricValue = Request.UserAgent;
                     os.UserSession = new UserSession();
-                    os.UserSession.SessionID = this.Session.SessionID;
+                    os.UserSession.SessionId = this.Session.SessionID;
                     os.Timestamp = DateTime.Now;
                     //use db context to update metrics database
                     metricDb.Metrics.Add(os);
@@ -382,7 +419,7 @@ namespace MvcMovie.Controllers
                         lang.MetricName = Metric.METRIC_LANGUAGE;
                         lang.MetricValue = langArr[i];
                         lang.UserSession = new UserSession();
-                        lang.UserSession.SessionID = this.Session.SessionID;
+                        lang.UserSession.SessionId = this.Session.SessionID;
                         lang.Timestamp = DateTime.Now;
                         //use db context to update metrics database
                         metricDb.Metrics.Add(lang);
@@ -446,7 +483,7 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_DISPLAY;
                 progress.UserSession = new UserSession();
-                progress.UserSession.SessionID = this.Session.SessionID;
+                progress.UserSession.SessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -514,13 +551,13 @@ namespace MvcMovie.Controllers
                 //update the existing session record with
                 //the newly discovered partner ref
                 UserSession userSessionUpdate = new UserSession();
-                userSessionUpdate.SessionID = this.Session.SessionID;
-                logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
+                userSessionUpdate.SessionId = this.Session.SessionID;
+                //logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
 
                 try
                 {
                     //check to see whether this session already exists
-                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionID);
+                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionId);
                     //update with latest values
                     sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
                     sessionDb.SaveChanges();
@@ -562,7 +599,7 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_ENTER;
                 progress.UserSession = new UserSession();
-                progress.UserSession.SessionID = this.Session.SessionID;
+                progress.UserSession.SessionId = this.Session.SessionID;
                 logger.Log(Logger.DEBUG, "User Session ID: " + this.Session.SessionID, null);
                 progress.Timestamp = DateTime.Now;
 
@@ -672,7 +709,7 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
                 progress.UserSession = new UserSession();
-                progress.UserSession.SessionID = this.Session.SessionID;
+                progress.UserSession.SessionId = this.Session.SessionID;
                 logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
                 progress.Timestamp = DateTime.Now;
 
@@ -759,7 +796,7 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
                 progress.UserSession = new UserSession();
-                progress.UserSession.SessionID = this.Session.SessionID;
+                progress.UserSession.SessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 try

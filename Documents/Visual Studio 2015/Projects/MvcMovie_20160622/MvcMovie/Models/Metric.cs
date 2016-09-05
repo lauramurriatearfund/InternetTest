@@ -43,11 +43,11 @@ namespace MvcMovie.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        public string UserSessionID  { get; set;}
+        public string UserSessionId  { get; set;}
 
-        public UserSession UserSession { get; set; }
+        public virtual UserSession UserSession { get; set; }
 
         
         public DateTime? Timestamp { get; set; }
