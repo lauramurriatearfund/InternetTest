@@ -19,56 +19,13 @@ namespace MvcMovie.Controllers
         private Logger logger = Logger.Get();
         private PartnerDbContext partnerDb = new PartnerDbContext();
         private MetricDbContext metricDb = new MetricDbContext();
-        private UserSessionDbContext sessionDb = new UserSessionDbContext();
+        //private UserSessionDbContext sessionDb = new UserSessionDbContext();
         private EvaluationDbContext evalDb = new EvaluationDbContext();
 
         public ActionResult Index()
         {
-            //first check whether the user session is already in the database, and if not, add it
-            UserSession userSess = sessionDb.UserSessions.Find(this.Session.SessionID);
-            if (userSess == null)
-            {
-                sessionDb.UserSessions.Add(new UserSession(this.Session.SessionID));
-
-                try
-                {
-                    sessionDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
-
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-                }
-
-
-            }
+            //call user session db helper to update UserSession with the current session ID
+            Boolean success = (new UserSessionDbHelper()).UpdateUserSession(this.Session.SessionID);
 
             // Update Metrics database with user's browser/device type
             string strUserAgent = Request.UserAgent.ToString().ToLower();
@@ -79,7 +36,7 @@ namespace MvcMovie.Controllers
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
                 metric.UserSessionId = this.Session.SessionID;
- 
+
                 try
                 {
                     metricDb.Metrics.Add(metric);
@@ -117,10 +74,6 @@ namespace MvcMovie.Controllers
                         }
                     }
                 }
-
-
-
-
             }
 
 
@@ -129,8 +82,7 @@ namespace MvcMovie.Controllers
                 Metric metric = new Metric();
                 metric.MetricName = Metric.METRIC_PAGE_REACHED;
                 metric.MetricValue = Metric.PROGRESS_SCREEN_HOME;
-                metric.UserSession = new UserSession();
-                metric.UserSession.SessionId = this.Session.SessionID;
+                metric.UserSessionId = this.Session.SessionID;
                 metric.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(metric);
                 try
@@ -172,9 +124,10 @@ namespace MvcMovie.Controllers
 
             }
 
-
             return View();
         }
+
+
 
         public ActionResult Text()
         {
@@ -183,6 +136,7 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_TEXT;
+                progress.UserSessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 metricDb.Metrics.Add(progress);
                 try
@@ -223,56 +177,11 @@ namespace MvcMovie.Controllers
 
                 }
 
-                UserSession userSessionUpdate = new UserSession();
-                userSessionUpdate.SessionId = this.Session.SessionID;
+                //call user session db helper to update UserSession with the current session ID
+                Boolean success = (new UserSessionDbHelper()).UpdateUserSession(this.Session.SessionID);
 
-                try
-                {
-                    //check to see whether this session already exists
-                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionId);
-                    //update with latest values
-                    sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
-                    sessionDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
-
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-                }
-
-
-
-                //string addressStr = Request.UserHostAddress;
-                string addressStr = "163.99.8.26";
+                string addressStr = Request.UserHostAddress;
                 string osStr = Request.UserAgent;
-
 
                 if (addressStr != null)
                 {
@@ -281,8 +190,7 @@ namespace MvcMovie.Controllers
                         Metric addressMetric = new Metric();
                         addressMetric.MetricName = Metric.METRIC_IP_ADDRESS;
                         addressMetric.MetricValue = addressStr;
-                        addressMetric.UserSession = new UserSession();
-                        addressMetric.UserSession.SessionId = this.Session.SessionID;
+                        addressMetric.UserSessionId = this.Session.SessionID;
                         addressMetric.Timestamp = DateTime.Now;
                         metricDb.Metrics.Add(addressMetric);
                         metricDb.SaveChanges();
@@ -292,8 +200,7 @@ namespace MvcMovie.Controllers
                         //unfound addresses will be null or -- these are screened out
                         Metric cityMetric = new Metric();
                         cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
-                        cityMetric.UserSession = new UserSession();
-                        cityMetric.UserSession.SessionId = this.Session.SessionID;
+                        cityMetric.UserSessionId = this.Session.SessionID;
                         cityMetric.Timestamp = DateTime.Now;
                         Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "City returned from subgurim api was: " + loc.city, null);
@@ -306,9 +213,7 @@ namespace MvcMovie.Controllers
 
                         Metric countryMetric = new Metric();
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
-
-                        countryMetric.UserSession = new UserSession();
-                        countryMetric.UserSession.SessionId = this.Session.SessionID;
+                        countryMetric.UserSessionId = this.Session.SessionID;
                         countryMetric.Timestamp = DateTime.Now;
                         Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "Country returned from subgurim api was: " + country.countryCode, null);
@@ -362,8 +267,7 @@ namespace MvcMovie.Controllers
                     os.MetricName = Metric.METRIC_USER_AGENT;
 
                     os.MetricValue = Request.UserAgent;
-                    os.UserSession = new UserSession();
-                    os.UserSession.SessionId = this.Session.SessionID;
+                    os.UserSessionId = this.Session.SessionID;
                     os.Timestamp = DateTime.Now;
                     //use db context to update metrics database
                     metricDb.Metrics.Add(os);
@@ -418,8 +322,7 @@ namespace MvcMovie.Controllers
                         Metric lang = new Metric();
                         lang.MetricName = Metric.METRIC_LANGUAGE;
                         lang.MetricValue = langArr[i];
-                        lang.UserSession = new UserSession();
-                        lang.UserSession.SessionId = this.Session.SessionID;
+                        lang.UserSessionId = this.Session.SessionID;
                         lang.Timestamp = DateTime.Now;
                         //use db context to update metrics database
                         metricDb.Metrics.Add(lang);
@@ -482,8 +385,7 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_DISPLAY;
-                progress.UserSession = new UserSession();
-                progress.UserSession.SessionId = this.Session.SessionID;
+                progress.UserSessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -539,68 +441,25 @@ namespace MvcMovie.Controllers
         [HttpPost]
         public ActionResult Enter(Partner model)
         {
+            logger.Log(Logger.DEBUG, "User Session ID: " + this.Session.SessionID, null);
 
             //capture the user session
             if (this.Session.SessionID != null)
             {
                 //store the partner ref in the session for use later 
-                //this should also force iis to session track 
+                //this should also force iis to session track if it is not already
                 Session["PartnerRef"] = model.PartnerRef;
 
 
-                //update the existing session record with
-                //the newly discovered partner ref
-                UserSession userSessionUpdate = new UserSession();
-                userSessionUpdate.SessionId = this.Session.SessionID;
-                //logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
+                //call user session db helper to update UserSession with the current session ID
+                Boolean success = (new UserSessionDbHelper()).UpdateUserSession(this.Session.SessionID);
 
-                try
-                {
-                    //check to see whether this session already exists
-                    var userSessionExisting = sessionDb.UserSessions.Find(userSessionUpdate.SessionId);
-                    //update with latest values
-                    sessionDb.Entry(userSessionExisting).CurrentValues.SetValues(userSessionUpdate);
-                    sessionDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
 
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-
-                }
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_ENTER;
-                progress.UserSession = new UserSession();
-                progress.UserSession.SessionId = this.Session.SessionID;
-                logger.Log(Logger.DEBUG, "User Session ID: " + this.Session.SessionID, null);
+                progress.UserSessionId = this.Session.SessionID;
+
                 progress.Timestamp = DateTime.Now;
 
                 //use db context to update metrics database
@@ -646,12 +505,33 @@ namespace MvcMovie.Controllers
             if (ModelState.IsValid)
             {
                 //use db context to update partner db
+
                 model.CreatedDate = DateTime.Now;
-                partnerDb.Partners.Add(model);
+
                 try
                 {
-                    partnerDb.SaveChanges();
-                    ViewBag.message = string.Format(Resources.Resources.InfoReceived);
+                    logger.Log(Logger.DEBUG, "Checking whether Partner: " + model.PartnerName + "exists in database", null);
+
+                    //first check whether the user session is already in the database, and if not, add it
+                    Partner partner = partnerDb.Partners.Where(b => b.PartnerName == model.PartnerName).FirstOrDefault();
+
+                    if (partner == null)
+                    {
+                        logger.Log(Logger.DEBUG, "Updating database with Partner: " + model.PartnerName, null);
+                        partner.PartnerRef = model.PartnerRef;
+                        partner.CreatedDate = DateTime.Now;
+                        partner.PartnerId = model.PartnerId;
+                        partner.Country = model.Country;
+                        partnerDb.SaveChanges();
+                    }
+                    else
+                    {
+                        //add it
+                        logger.Log(Logger.DEBUG, "Adding Partner: " + model.PartnerName + " to the database", null);
+                        partnerDb.Partners.Add(model);
+                        partnerDb.SaveChanges();
+
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -708,8 +588,7 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_SUBMIT;
-                progress.UserSession = new UserSession();
-                progress.UserSession.SessionId = this.Session.SessionID;
+                progress.UserSessionId = this.Session.SessionID;
                 logger.Log(Logger.DEBUG, "SessionID: " + this.Session.SessionID, null);
                 progress.Timestamp = DateTime.Now;
 
@@ -795,8 +674,7 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
-                progress.UserSession = new UserSession();
-                progress.UserSession.SessionId = this.Session.SessionID;
+                progress.UserSessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 try
@@ -849,6 +727,7 @@ namespace MvcMovie.Controllers
                 Metric progress = new Metric();
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_UPLOAD;
+                progress.UserSessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
                 //use db context to update metrics database
                 metricDb.Metrics.Add(progress);
@@ -1032,6 +911,18 @@ namespace MvcMovie.Controllers
         }
 
 
+        public ActionResult Locate()
+        {
+            return View();
+        }
 
+
+        [HttpPost]
+        public ActionResult AddSpace(RentOutSpace rentModel)
+        {
+            Session.Add("RentModel" , rentModel);
+            
+            return View();
+        }
     }
 }

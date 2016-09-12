@@ -215,6 +215,33 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate Me.
+        /// </summary>
+        public static string LocateMe {
+            get {
+                return ResourceManager.GetString("LocateMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Low Speed Broadband.
         /// </summary>
         public static string LowSpeedBroadband {
@@ -422,7 +449,7 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please approve the dialogue box so we can obtain your location. .
+        ///   Looks up a localized string similar to Please click the &apos;Locate&apos; button, then &apos;approve&apos; the dialogue box so we can obtain your location. .
         /// </summary>
         public static string ValidateDesc {
             get {
