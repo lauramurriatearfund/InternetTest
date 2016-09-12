@@ -17,7 +17,7 @@ namespace MvcMovie.Models
         public static readonly string PROGRESS_SCREEN_DISPLAY = "DISPLAY";
         public static readonly string PROGRESS_SCREEN_ENTER = "ENTER";
         public static readonly string PROGRESS_SCREEN_SUBMIT = "SUBMIT";
-        public static readonly string PROGRESS_SCREEN_VALIDATE = "VALIDATE";
+        public static readonly string PROGRESS_SCREEN_VALIDATE = "LOCATE";
         public static readonly string PROGRESS_SCREEN_UPLOAD = "UPLOAD";
         public static readonly string PROGRESS_SCREEN_SUCCESS = "SUCCESS";
 
@@ -26,7 +26,7 @@ namespace MvcMovie.Models
         public static readonly string PAGE_LOAD_TIME_DISPLAY = "DISPLAY";
         public static readonly string PAGE_LOAD_TIME_ENTER = "ENTER";
         public static readonly string PAGE_LOAD_TIME_SUBMIT = "SUBMIT";
-        public static readonly string PAGE_LOAD_TIME_VALIDATE = "VALIDATE";
+        public static readonly string PAGE_LOAD_TIME_VALIDATE = "LOCATE";
         public static readonly string PAGE_LOAD_TIME_UPLOAD = "UPLOAD";
         public static readonly string PAGE_LOAD_TIME_SUCCESS = "SUCCESS";
 
@@ -40,6 +40,8 @@ namespace MvcMovie.Models
         public static readonly string METRIC_LANGUAGE = "USER_LANGUAGE";
         public static readonly string METRIC_COUNTRY_FROM_IP = "COUNTRY_FROM_IP";
         public static readonly string METRIC_CITY_FROM_IP = "CITY_FROM_IP";
+        public static readonly string METRIC_LATITUDE = "LATITUDE";
+        public static readonly string METRIC_LONGITUDE = "LONGITUDE";
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -202,7 +202,7 @@ namespace MvcMovie.Controllers
                         cityMetric.MetricName = Metric.METRIC_CITY_FROM_IP;
                         cityMetric.UserSessionId = this.Session.SessionID;
                         cityMetric.Timestamp = DateTime.Now;
-                        Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
+                        Subgurim.Controles.Location loc = LocationHelper.GetCityLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "City returned from subgurim api was: " + loc.city, null);
                         if (loc != null && loc.city != null && loc.city != "  ")
                         {
@@ -215,7 +215,7 @@ namespace MvcMovie.Controllers
                         countryMetric.MetricName = Metric.METRIC_COUNTRY_FROM_IP;
                         countryMetric.UserSessionId = this.Session.SessionID;
                         countryMetric.Timestamp = DateTime.Now;
-                        Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
+                        Subgurim.Controles.Location country = LocationHelper.GetCountryLocationFromIP(addressStr);
                         logger.Log(Logger.DEBUG, "Country returned from subgurim api was: " + country.countryCode, null);
                         if (loc != null && loc.city != null && loc.city != "--")
                             if (country != null && country.countryCode != null && country.city != "--")
@@ -665,9 +665,15 @@ namespace MvcMovie.Controllers
 
         }
 
+        [HttpGet]
         public ActionResult Validate()
         {
-            ViewBag.formSubmitSuccess = "Your form submission has been successfully received";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Validate(Models.Location model)
+        {
 
             if (this.Session.SessionID != null)
             {
@@ -676,9 +682,25 @@ namespace MvcMovie.Controllers
                 progress.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
                 progress.UserSessionId = this.Session.SessionID;
                 progress.Timestamp = DateTime.Now;
+
+                Metric lat = new Metric();
+                lat.MetricName = Metric.METRIC_PAGE_REACHED;
+                lat.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
+                lat.UserSessionId = this.Session.SessionID;
+                lat.Timestamp = DateTime.Now;
+
+                Metric longitude = new Metric();
+                longitude.MetricName = Metric.METRIC_PAGE_REACHED;
+                longitude.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
+                longitude.UserSessionId = this.Session.SessionID;
+                longitude.Timestamp = DateTime.Now;
+
                 //use db context to update metrics database
                 try
                 {
+                    metricDb.Metrics.Add(progress);
+                    metricDb.Metrics.Add(lat);
+                    metricDb.Metrics.Add(longitude);
                     metricDb.SaveChanges();
                 }
                 catch (DbEntityValidationException ex)
@@ -911,18 +933,12 @@ namespace MvcMovie.Controllers
         }
 
 
-        public ActionResult Locate()
+        public ActionResult Locate(Models.Location model)
         {
             return View();
         }
 
 
-        [HttpPost]
-        public ActionResult AddSpace(RentOutSpace rentModel)
-        {
-            Session.Add("RentModel" , rentModel);
-            
-            return View();
-        }
+       
     }
 }
