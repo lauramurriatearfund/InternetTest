@@ -786,11 +786,7 @@ namespace MvcMovie.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Validate()
-        {
-            return View();
-        }
+       
 
         [HttpPost]
         public ActionResult Validate(Models.Location model)
@@ -1055,9 +1051,63 @@ namespace MvcMovie.Controllers
 
 
         [HttpGet]
-        public ActionResult Locate()
+        public ActionResult Locate(string latitude, string longitude)
         {
-            logger.Log(Logger.DEBUG, "Get. Did not Capture latitude: " , null);
+            logger.Log(Logger.DEBUG, "HttpGet " , null);
+            logger.Log(Logger.DEBUG, "Captured using get, latitude: " + latitude + "  Longitude: " + longitude, null);
+
+            if (latitude != null & latitude != "")
+            {
+                Metric latmetric = new Metric();
+                latmetric.MetricName = Metric.METRIC_GEO_LOCATION_LAT;
+                latmetric.MetricValue = latitude;
+
+                Metric longmetric = new Metric();
+                longmetric.MetricName = Metric.METRIC_GEO_LOCATION_LONG;
+                longmetric.MetricValue = longitude;
+
+
+                try
+                {
+                    metricDb.Metrics.Add(latmetric);
+                    metricDb.Metrics.Add(longmetric);
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+
+                }
+            }
+
             return View();
         }
 
@@ -1065,6 +1115,68 @@ namespace MvcMovie.Controllers
         public ActionResult Locate(Models.Location model)
         {
             logger.Log(Logger.DEBUG, "Captured latitude: " + model.latitude + "  Longitude: " + model.longitude, null);
+            if (this.Session.SessionID != null)
+            {
+                Metric progress = new Metric();
+                progress.MetricName = Metric.METRIC_PAGE_REACHED;
+                progress.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
+                progress.UserSession = new UserSession();
+                progress.UserSession.SessionId = this.Session.SessionID;
+                progress.Timestamp = DateTime.Now;
+
+                Metric lat = new Metric();
+                lat.MetricName = Metric.METRIC_PAGE_REACHED;
+                lat.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
+                lat.UserSessionId = this.Session.SessionID;
+                lat.Timestamp = DateTime.Now;
+
+                Metric longitude = new Metric();
+                longitude.MetricName = Metric.METRIC_PAGE_REACHED;
+                longitude.MetricValue = Metric.PROGRESS_SCREEN_VALIDATE;
+                longitude.UserSessionId = this.Session.SessionID;
+                longitude.Timestamp = DateTime.Now;
+
+                //use db context to update metrics database
+                try
+                {
+                    metricDb.Metrics.Add(progress);
+                    metricDb.Metrics.Add(lat);
+                    metricDb.Metrics.Add(longitude);
+                    metricDb.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
+                    {
+                        // Get entry
+                        DbEntityEntry entry = item.Entry;
+                        string entityTypeName = entry.Entity.GetType().Name;
+
+                        // Log error messages
+                        foreach (DbValidationError subItem in item.ValidationErrors)
+                        {
+                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
+                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
+                            logger.Log(Logger.ERROR, message, ex);
+                        }
+
+                        // Rollback changes
+                        switch (entry.State)
+                        {
+                            case EntityState.Added:
+                                entry.State = EntityState.Detached;
+                                break;
+                            case EntityState.Modified:
+                                entry.CurrentValues.SetValues(entry.OriginalValues);
+                                entry.State = EntityState.Unchanged;
+                                break;
+                            case EntityState.Deleted:
+                                entry.State = EntityState.Unchanged;
+                                break;
+                        }
+                    }
+                }
+            }
             return View();
         }
 

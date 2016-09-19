@@ -11,6 +11,8 @@
 <body>
     <script>
         $(document).ready(function () {
+            $("#latitude").hide();
+            $("#longitude").hide();
             $("#latLabel").hide();
             $("#longLabel").hide();
             $("#tellUs").hide();
@@ -30,7 +32,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            <a href="@Url.Action(" Upload", "HelloWorld" )">
+            <a href="@Url.Action("Submit", "HelloWorld" )">
                 <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
             </a>
 
@@ -66,11 +68,11 @@
                    name="latitude"
                    type="text"
                    readonly
-                   value="6" />
+                   value="" />
             <input id="longitude"
                    name="longitude"
                    type="text"
-                   value="7" />
+                   value="" />
             <input type="submit" id="tellUs" value="@Resources.TellUs" class="btn btn-default" formaction="Locate" />
             
         </div>
@@ -81,6 +83,27 @@
     <br />
     <br />
     <div id="mapholder"></div>
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm())
+    {
+    <div class="row">
+
+        <div class="col-md-12">
+            <a href="@Url.Action("Submit", "HelloWorld" )">
+                <image src="/Content/images/back_button.png" width="70" height="70" valign="top" alt="@Resources.Back"></image>
+            </a>
+
+            <span class="pull-right">
+
+                <input type="image" src="/Content/images/forward_button.png" width="70" height="70" valign="top" alt="@Resources.Continue" />
+
+            </span>
+        </div>
+    </div>
+
+    }
 
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDZ4QLJeviEtWj_G_lLJFdL1zjmjnkBEPg&sensor=false"></script>
 

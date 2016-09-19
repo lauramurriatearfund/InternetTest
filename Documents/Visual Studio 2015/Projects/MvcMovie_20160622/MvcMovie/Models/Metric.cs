@@ -33,7 +33,8 @@ namespace MvcMovie.Models
 
         public static readonly string METRIC_PAGE_REACHED = "PAGE_REACHED";
         public static readonly string METRIC_SPEED_TEST_RESULT = "SPEED_TEST";
-        public static readonly string METRIC_GEO_LOCATION = "LOCATION";
+        public static readonly string METRIC_GEO_LOCATION_LAT = "LATITUDE";
+        public static readonly string METRIC_GEO_LOCATION_LONG = "LONGITUDE";
         public static readonly string METRIC_DEVICE_TYPE = "DEVICE_TYPE";
         public static readonly string METRIC_IP_ADDRESS = "IP_ADDRESS";
         public static readonly string METRIC_USER_AGENT = "USER_AGENT";
