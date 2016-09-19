@@ -57,7 +57,7 @@
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Display" ? "active" : "")">@Html.ActionLink(@Resources.DisplayMenuLabel, "Display", "HelloWorld")</li>
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Enter" ? "active" : "")">@Html.ActionLink(@Resources.EnterMenuLabel, "Enter", "HelloWorld")</li>
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Submit" ? "active" : "")">@Html.ActionLink(@Resources.SubmitMenuLabel, "Submit", "HelloWorld")</li>
-                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Validate" ? "active" : "")">@Html.ActionLink(@Resources.ValidateMenuLabel, "Validate", "HelloWorld")</li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Locate" ? "active" : "")">@Html.ActionLink(@Resources.LocateMenuLabel, "Locate", "HelloWorld")</li>
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Upload" ? "active" : "")">@Html.ActionLink(@Resources.UploadMenuLabel, "Upload", "HelloWorld")</li>
 
                 </ul>

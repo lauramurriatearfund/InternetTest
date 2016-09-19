@@ -233,6 +233,15 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locate.
+        /// </summary>
+        public static string LocateMenuLabel {
+            get {
+                return ResourceManager.GetString("LocateMenuLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Longitude.
         /// </summary>
         public static string Longitude {
@@ -449,20 +458,11 @@ namespace MvcMovie.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please click the &apos;Locate&apos; button, then &apos;approve&apos; the dialogue box so we can obtain your location. .
+        ///   Looks up a localized string similar to Please approve the dialogue box so we can obtain your location. .
         /// </summary>
         public static string ValidateDesc {
             get {
                 return ResourceManager.GetString("ValidateDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locate.
-        /// </summary>
-        public static string ValidateMenuLabel {
-            get {
-                return ResourceManager.GetString("ValidateMenuLabel", resourceCulture);
             }
         }
         

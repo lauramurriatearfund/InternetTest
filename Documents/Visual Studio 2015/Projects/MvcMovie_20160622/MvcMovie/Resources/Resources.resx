@@ -239,9 +239,9 @@ Remember that this is just a test so the exact information you type is not impor
     <value>Upload of Supporting Documents</value>
   </data>
   <data name="ValidateDesc" xml:space="preserve">
-    <value>Please click the 'Locate' button, then 'approve' the dialogue box so we can obtain your location. </value>
+    <value>Please approve the dialogue box so we can obtain your location. </value>
   </data>
-  <data name="ValidateMenuLabel" xml:space="preserve">
+  <data name="LocateMenuLabel" xml:space="preserve">
     <value>Locate</value>
   </data>
   <data name="ValidateTitle" xml:space="preserve">
