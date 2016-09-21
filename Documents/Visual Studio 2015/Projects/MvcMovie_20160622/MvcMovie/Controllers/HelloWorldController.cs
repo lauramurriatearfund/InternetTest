@@ -79,46 +79,10 @@ namespace MvcMovie.Controllers
                 metric.MetricValue = strUserAgent;
                 metric.Timestamp = DateTime.Now;
                 metric.UserSessionId = this.Session.SessionID;
- 
-                try
-                {
-                    metricDb.Metrics.Add(metric);
-                    metricDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
-
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-                }
 
 
+                MetricDataAccess dal = new MetricDataAccess();
+                dal.add(metric);
 
 
             }
@@ -132,43 +96,9 @@ namespace MvcMovie.Controllers
                 metric.UserSession = new UserSession();
                 metric.UserSession.SessionId = this.Session.SessionID;
                 metric.Timestamp = DateTime.Now;
-                metricDb.Metrics.Add(metric);
-                try
-                {
-                    metricDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
 
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-                }
+                MetricDataAccess dal = new MetricDataAccess();
+                dal.add(metric);
 
             }
 
@@ -184,44 +114,10 @@ namespace MvcMovie.Controllers
                 progress.MetricName = Metric.METRIC_PAGE_REACHED;
                 progress.MetricValue = Metric.PROGRESS_SCREEN_TEXT;
                 progress.Timestamp = DateTime.Now;
-                metricDb.Metrics.Add(progress);
-                try
-                {
-                    metricDb.SaveChanges();
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors)
-                    {
-                        // Get entry
-                        DbEntityEntry entry = item.Entry;
-                        string entityTypeName = entry.Entity.GetType().Name;
+                MetricDataAccess dal = new MetricDataAccess();
+                dal.add(progress);
 
-                        // Log error messages
-                        foreach (DbValidationError subItem in item.ValidationErrors)
-                        {
-                            string message = string.Format("Error '{0}' occurred in {1} at {2}",
-                                     subItem.ErrorMessage, entityTypeName, subItem.PropertyName);
-                            logger.Log(Logger.ERROR, message, ex);
-                        }
-
-                        // Rollback changes
-                        switch (entry.State)
-                        {
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                break;
-                            case EntityState.Modified:
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                        }
-                    }
-
-                }
+            }
 
                 UserSession userSessionUpdate = new UserSession();
                 userSessionUpdate.SessionId = this.Session.SessionID;

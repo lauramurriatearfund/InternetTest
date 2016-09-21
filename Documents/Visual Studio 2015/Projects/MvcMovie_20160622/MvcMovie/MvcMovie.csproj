@@ -213,6 +213,7 @@
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="DAL\MetricDataAccess.cs" />
     <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Metric.cs" />
